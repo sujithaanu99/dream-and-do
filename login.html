@@ -4,13 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            background-color: green;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h3 {
+            text-align: center;
+        }
+        table {
+            margin: auto;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+        }
+        input[type="submit"] {
+            background-color: white;
+            color: green;
+            padding: 5px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
-<body style="background-color: green; color: white; font-family: Arial, sans-serif;">
-    <h3 style="text-align: center;">LOGIN</h3>
+<body>
+    <h3>LOGIN</h3>
     <p><b>Welcome to Hobby Hive</b></p>
     <p>Login</p>
     <form>
-        <table border="0" style="margin: auto; text-align: left;">
+        <table border="0">
             <tr>
                 <td>Login ID:</td>
                 <td><input type="text" maxlength="45" size="20"></td>
@@ -20,8 +45,8 @@
                 <td><input type="password" minlength="5" size="20"></td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center;">
-                    <input type="submit" name="s" value="Accept" style="background-color: white; color: green; padding: 5px 15px; border: none; cursor: pointer; border-radius: 5px;">
+                <td colspan="2" style="text-align:center;">
+                    <input type="submit" name="s" value="Accept">
                 </td>
             </tr>
         </table>
