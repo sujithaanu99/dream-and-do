@@ -1,9 +1,9 @@
+<!DOCTYPE html>
 <html>
+<head>
     <title>Register</title>
-    <head>       
     <style>
-        html, body
-        {
+        html, body {
             height: 100%;
             margin: 0;
             display: flex;
@@ -12,8 +12,7 @@
             background-color: teal;
             font-family: Arial, sans-serif;
         }
-        form 
-        {
+        form {
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -21,82 +20,75 @@
             width: 100%;
             max-width: 500px;
         }
-        table 
-        {
+        table {
             width: 100%;
         }
-
-        td 
-        {
+        td {
             padding: 10px;
             vertical-align: middle;
         }
-
-        input[type="text"], input[type="password"], input[type="submit"] 
-        {
+        input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
             padding: 10px;
             border: 1px solid;
             border-radius: 5px;
             box-sizing: border-box;
         }
-
-        input[type="submit"] 
-        {
+        input[type="submit"] {
             background-color: teal;
             color: white;
             border: none;
             cursor: pointer;
             font-size: 16px;
         }
-
-        input[type="submit"]:hover 
-        {
+        input[type="submit"]:hover {
             background-color: #006d6d;
         }
-
-        h3, p 
-        {
+        h3, p {
             text-align: center;
             color: white;
         }
-         #result {
-                text-align: center;
-                color: red;
-                font-weight: bold;
-                 }
-        
+        #result {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
     </style>
     <script type="text/javascript">
-        function checkpassword(event)
-            {
-                event.preventDefault();
-               var a = document.getElementById("p1").value;
-               var b = document.getElementById("p2").value;
-                if(a===""||b==="")
-                          {
-                            document.getElementById("result").textContent="password cannot be empty";
-                            return false;
-                          }
-                if(a===b)
-                {
-                    document.getElementById("result");
-                    return true;
-                }
-                else
-                {
+        function checkpassword(event) {
+            // Prevent form submission
+            event.preventDefault();
+
+            // Get the password values
+            var password = document.getElementById("p1").value;
+            var confirmPassword = document.getElementById("p2").value;
+
+            // Check if passwords are empty
+            if (password === "" || confirmPassword === "") {
+                document.getElementById("result").textContent = "Password cannot be empty.";
+                return false;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
                 document.getElementById("result").textContent = "Passwords do not match.";
                 return false;
-                }
-                event.target.submit();
-                     </script>
+            }
+
+            // If validation passes
+            document.getElementById("result").textContent = "Passwords match.";
+            document.getElementById("result").style.color = "green";
+
+            // Submit the form after validation
+            event.target.submit();
+        }
+    </script>
 </head>
-        
 <body>
     <div>
         <h3>REGISTER</h3>
         <p>Signup/Register</p>
-        <form action="login.html" method="GET" onsubmit="checkpassword(event)">
+        <form onsubmit="checkpassword(event)">
             <table border="0">
                 <tr>
                     <td>First Name:</td>
@@ -128,6 +120,7 @@
                 </tr>
             </table>
         </form>
+        <p id="result"></p>
     </div>
 </body>
 </html>
