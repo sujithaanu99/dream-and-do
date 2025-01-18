@@ -1,39 +1,104 @@
-<html>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<head>
-		<h3>REGISTER</h3>
-	</head>
-	<body>
-		<p>signup/register</p>
-		<form>
-			<table width="100%" border="5">
- 			   <tr>
- 				<td>First Name:</td>
- 				<td><input type="text" maxlength="30" size=30></td>
- 			    </tr>
-			    <tr>
- 				<td>Last Name:</td>
- 				<td><input type="text" maxlength="50" size=30></td>
- 			    </tr>
-				<tr>
-					<td>Age:</td>
-					<td><input type="number" maxlength=2 size=30></td>
-				</tr>
- 			    <tr>
- 				<td>Enter Password:</td>
- 				<td><input type="password" maxlenght=15 size=30></td>
- 			     </tr>
-  			     <tr>
- 				<td>Confirm Password:</td>
- 				<td><input type="password" maxlenght=15 size=30></td>
-			     </tr>
-			     <tr>
- 				<td>Gender:</td>
- 				<td><input type="radio" name="g" value="m">Male<input type="radio" name="g" value="f">Female</td>
-			    <tr>
- 				<td><div align="center"><input type="submit" name="s" value="Accept"></div></td>
-			    </tr>
-			</table>
-		</form>
-	</body>
- </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Set page to fill entire viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: teal; /* Set background color to teal */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Style the form container */
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px; /* Ensure responsiveness */
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        input[type="text"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: teal;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #006d6d;
+        }
+
+        h3, p {
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>REGISTER</h3>
+        <p>Signup/Register</p>
+        <form action="login.html" method="GET">
+            <table border="0">
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" name="first_name" maxlength="30" required></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><input type="text" name="last_name" maxlength="30" required></td>
+                </tr>
+                <tr>
+                    <td>Enter Password:</td>
+                    <td><input type="password" name="password" maxlength="10" required></td>
+                </tr>
+                <tr>
+                    <td>Confirm Password:</td>
+                    <td><input type="password" name="confirm_password" maxlength="10" required></td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td>
+                        <input type="radio" name="gender" value="male" required> Male
+                        <input type="radio" name="gender" value="female" required> Female
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Accept">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
