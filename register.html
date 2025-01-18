@@ -59,13 +59,39 @@
             text-align: center;
             color: white;
         }
+         #result {
+                text-align: center;
+                color: red;
+                font-weight: bold;
+                 }
+        
     </style>
+    <script type="text/javascript">
+        function checkpassword(event)
+            {
+                event.preventDefault();
+               var a = document.getElementById("p1").value;
+               var b = document.getElementById("p2").value;
+                if(p1===""||p2==="")
+                          {
+                            document.getElementById("result").textContent="password cannot be empty";
+                            return;
+                          }
+                if(p1===p2)
+                {
+                    document.getElementById("result");
+                }
+                else
+                {
+                document.getElementById("result").textContent = "Passwords do not match.";
+                }
+                                               
 </head>
 <body>
     <div>
         <h3>REGISTER</h3>
         <p>Signup/Register</p>
-        <form action="login.html" method="GET">
+        <form action="login.html" method="GET" onsubmit="checkpassword(event)">
             <table border="0">
                 <tr>
                     <td>First Name:</td>
@@ -77,11 +103,11 @@
                 </tr>
                 <tr>
                     <td>Enter Password:</td>
-                    <td><input type="password" name="password" maxlength="10" required></td>
+                    <td><input type="password" id="p1" name="password" maxlength="10" required></td>
                 </tr>
                 <tr>
                     <td>Confirm Password:</td>
-                    <td><input type="password" name="confirm_password" maxlength="10" required></td>
+                    <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
                 </tr>
                 <tr>
                     <td>Gender:</td>
@@ -92,7 +118,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input type="submit" value="Accept">
+                        <input type="submit" value="Submit">
                     </td>
                 </tr>
             </table>
