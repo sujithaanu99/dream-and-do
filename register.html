@@ -73,19 +73,22 @@
                 event.preventDefault();
                var a = document.getElementById("p1").value;
                var b = document.getElementById("p2").value;
-                if(p1===""||p2==="")
+                if(a===""||b==="")
                           {
                             document.getElementById("result").textContent="password cannot be empty";
-                            return;
+                            return false;
                           }
-                if(p1===p2)
+                if(a===b)
                 {
                     document.getElementById("result");
+                    return true;
                 }
                 else
                 {
                 document.getElementById("result").textContent = "Passwords do not match.";
+                return false;
                 }
+                event.target.submit();
                      </script>
 </head>
         
