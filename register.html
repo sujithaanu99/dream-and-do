@@ -68,13 +68,6 @@
             event.preventDefault();
             var pswd = document.getElementById("p1").value;
             var cPswd = document.getElementById("p2").value;
-            if (pswd === "" || cPswd === "") 
-            {
-                document.getElementById("result").textContent = "Password cannot be empty";
-                 document.getElementById("result") .style.color = "white";
-                return;
-            }
-
             if ( pswd!== cPswd) 
             {
                 document.getElementById("result").textContent = "Passwords do not match";
