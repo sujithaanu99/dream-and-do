@@ -74,11 +74,11 @@
                 return;
             }
 
-            // If passwords match, allow the form to submit
+            // If passwords match, show success and submit the form
             document.getElementById("result").textContent = "Passwords match!";
             document.getElementById("result").style.color = "green";
 
-            // Submit the form
+            // Allow form submission to proceed to login.html
             event.target.submit();
         }
     </script>
@@ -87,7 +87,7 @@
     <div>
         <h3>REGISTER</h3>
         <p>Signup/Register</p>
-        <form onsubmit="checkpassword(event)">
+        <form action="login.html" method="GET" onsubmit="checkpassword(event)">
             <table border="0">
                 <tr>
                     <td>First Name:</td>
