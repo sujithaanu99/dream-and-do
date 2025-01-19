@@ -1,12 +1,39 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Dream and Do</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: black;
+                overflow: hidden;
+            }
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
-        <a href="register.html">
-            <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" height=100%; width=100%>
-        </a>
-        <a href="login.html">
-        </a>
+        <img 
+            src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" 
+            alt="Dream and Do Logo" 
+            onclick="loginpg()">
+        
+        <script>
+            function loginpg()
+                {
+               <a href="login.html">
+                  <img src="image_url.jpg" alt="Redirect to Login" style="width:100%; height:100%;">
+              </a>
+                }
+        </script>
     </body>
 </html>
