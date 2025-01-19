@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Register</title>
@@ -7,10 +8,21 @@
             height: 100%;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             background-color: teal;
             font-family: Arial, sans-serif;
+        }
+        .header
+        {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .header img
+        {
+            max-width: 150px;
+            height: auto;
         }
         form 
         {
@@ -20,6 +32,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 500px;
+            margin-top: 20px;
         }
         table 
         {
@@ -50,11 +63,6 @@
         {
             background-color: #006d6d;
         }
-        h3, p 
-        {
-            text-align: center;
-            color: white;
-        }
         #result
         {
             text-align: center;
@@ -68,56 +76,56 @@
             event.preventDefault();
             var pswd = document.getElementById("p1").value;
             var cPswd = document.getElementById("p2").value;
-            if ( pswd!== cPswd) 
+            if ( pswd !== cPswd) 
             {
                 document.getElementById("result").textContent = "Passwords do not match";
-                 document.getElementById("result").style.color = "white";
+                document.getElementById("result").style.color = "white";
                 return;
             }
-            document.getElementById("result");
             event.target.submit();
         }
     </script>
 </head>
-    <body>
-   <div style="text-align: center; margin-top: 20px;">
-    <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image" style="max-width: 150px; height: auto;">
-    <h3 style="color: white; margin-top: 10px;">REGISTER</h3>
-    <p style="color: white;">Signup/Register</p>
-</div>
-        <form action="login.html" method="GET" onsubmit="checkpassword(event)">
-            <table border="0">
-                <tr>
-                    <td>First Name:</td>
-                    <td><input type="text" name="first_name" maxlength="30" required></td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td><input type="text" name="last_name" maxlength="30" required></td>
-                </tr>
-                <tr>
-                    <td>Enter Password:</td>
-                    <td><input type="password" id="p1" name="password" maxlength="10" required></td>
-                </tr>
-                <tr>
-                    <td>Confirm Password:</td>
-                    <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
-                </tr>
-                <tr>
-                    <td>Gender:</td>
-                    <td>
-                        <input type="radio" name="gender" value="male" required> Male
-                        <input type="radio" name="gender" value="female" required> Female
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="Submit">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <p id="result"></p>
+<body>
+    <!-- Logo and Heading Section -->
+    <div class="header">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
+        <h3 style="color: white;">REGISTER</h3>
+        <p style="color: white;">Signup/Register</p>
     </div>
+    <!-- Form Section -->
+    <form action="login.html" method="GET" onsubmit="checkpassword(event)">
+        <table border="0">
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="first_name" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="last_name" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Enter Password:</td>
+                <td><input type="password" id="p1" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <input type="radio" name="gender" value="male" required> Male
+                    <input type="radio" name="gender" value="female" required> Female
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p id="result"></p>
 </body>
 </html>
