@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dream and Do</title>
-        <style>
-            html, body {
-                height: 100%;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: black;
-                overflow: hidden;
-            }
+<head>
+    <title>Dream and Do</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            overflow: hidden;
+        }
 
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
+        a {
+            height: 100%;
+            width: 100%;
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Wrapping the image with an <a> tag for redirection -->
+    <a href="login.html">
         <img 
             src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" 
-            alt="Dream and Do Logo" 
-            onclick="loginPg()">
-        
-        <script>
-            function loginPg()
-                {
-               <a href="login.html">
-                  <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Redirect to Login" style="width:100%; height:100%;">
-              </a>
-                }
-        </script>
-    </body>
+            alt="Dream and Do Logo">
+    </a>
+</body>
 </html>
