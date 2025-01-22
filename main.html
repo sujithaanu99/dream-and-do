@@ -1,12 +1,81 @@
+<!DOCTYPE html>
 <html>
-<head> 
- <title>DREAM AND DO</title>
+<head>
+    <title>Main Page</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            justify-content: center;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 900px;
+            margin: 20px;
+        }
+        .section {
+            background-color: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .section:hover {
+            transform: scale(1.1);
+        }
+        h2 {
+            margin: 0 0 20px;
+        }
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .section a {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+    </style>
 </head>
-<frameset rows="25%,25%,25%,*">
-  <frameset cols="10%,*" border="10">
-   <frame name="f4" src="login.html">
-    <frame name="f5" src="register.html">
-  </frameset>
 <body>
-  
+    <h2>Welcome DREAM AND DO</h2>
+
+    <div class="container">
+        <!-- Register Section -->
+        <div class="section">
+            <div class="icon">📝</div>
+            <a href="register.html"><h3>Register</h3></a>
+        </div>
+
+        <!-- Login Section -->
+        <div class="section">
+            <div class="icon">🔑</div>    
+            <a href="login1.html"><h3>Login</h3></a>
+        </div>
+
+        <!-- Mode Selection Section -->
+        <div class="section">
+            <div class="icon">🌐</div>
+            <a href="mode.html"> <h3>Mode</h3></a>
+        </div>
+
+        <!-- Profile Update Section -->
+        <div class="section">
+            <div class="icon">👤</div>
+            <a href="update.html"><h3>Profile Update</h3></a>
+        </div>
+    </div>
 </body>
+</html>
