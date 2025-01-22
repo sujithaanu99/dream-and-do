@@ -40,7 +40,7 @@
         input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid;
+            border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
         }
@@ -71,8 +71,8 @@
     <script type="text/javascript">
         function handleLogin(event) {
             event.preventDefault();
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("password").value.trim();
 
             if (!username || !password) {
                 document.getElementById("result").textContent = "Please fill in both fields";
@@ -89,13 +89,13 @@
 <body>
     <!-- Logo and Heading Section -->
     <div class="header">
-        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
+        <img src="https://raw.githubusercontent.com/sujithaanu99/dream-and-do/main/plogo.jpg" alt="Logo Image">
         <h3 style="color: white;">LOGIN</h3>
         <p style="color: white;">Enter your credentials</p>
     </div>
     <!-- Form Section -->
     <form onsubmit="handleLogin(event)">
-        <table border="0">
+        <table>
             <tr>
                 <td>Username:</td>
                 <td><input type="text" id="username" name="username" maxlength="30" required></td>
