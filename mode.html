@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mode Selection</title>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #006d6d;
+        }
+        #workshop-list {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        #workshop-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        #workshop-list ul li {
+            padding: 5px 0;
+            color: #333;
+        }
+    </style>
+    <script>
+        function showWorkshops() {
+            const mode = document.getElementById("modeSelect").value;
+            const workshopList = document.getElementById("workshop-list");
+            workshopList.innerHTML = ""; // Clear previous list
+
+            if (mode === "online") {
+                const onlineWorkshops = [
+                    "Web Development Basics",
+                    "AI for Beginners",
+                    "Cloud Computing Essentials",
+                ];
+                workshopList.innerHTML = "<h3>Online Workshops</h3><ul>" +
+                    onlineWorkshops.map(w => `<li>${w}</li>`).join("") +
+                    "</ul>";
+            } else if (mode === "offline") {
+                const offlineWorkshops = [
+                    "Hands-on Robotics",
+                    "IoT Applications Workshop",
+                    "Sustainable Agriculture Techniques",
+                ];
+                workshopList.innerHTML = "<h3>Offline Workshops</h3><ul>" +
+                    offlineWorkshops.map(w => `<li>${w}</li>`).join("") +
+                    "</ul>";
+            } else {
+                workshopList.textContent = "Please select a mode to view workshops.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Mode Selection</h2>
+        <p>Select a mode to see the available workshops:</p>
+        <select id="modeSelect">
+            <option value="">-- Select Mode --</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+        </select>
+        <button onclick="showWorkshops()">Submit</button>
+        <div id="workshop-list"></div>
+    </div>
+</body>
+</html>

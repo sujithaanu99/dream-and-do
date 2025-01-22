@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Update</title>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-container {
+            margin-top: 20px;
+            display: none;
+        }
+        .form-container label, input {
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+            width: 100%;
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #006d6d;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+        }
+    </style>
+    <script>
+        function showUpdateForm() {
+            const selectedField = document.getElementById("fieldSelect").value;
+            const formContainer = document.getElementById("form-container");
+            const fieldLabel = document.getElementById("field-label");
+            const fieldInput = document.getElementById("field-input");
+            const result = document.getElementById("result");
+
+            result.textContent = ""; // Clear previous result
+            if (selectedField) {
+                formContainer.style.display = "block";
+                fieldLabel.textContent = `Enter new ${selectedField}:`;
+                fieldInput.placeholder = `New ${selectedField}`;
+                fieldInput.type = selectedField === "password" ? "password" : "text";
+            } else {
+                formContainer.style.display = "none";
+            }
+        }
+
+        function updateProfile(event) {
+            event.preventDefault();
+            const selectedField = document.getElementById("fieldSelect").value;
+            const newValue = document.getElementById("field-input").value;
+            const result = document.getElementById("result");
+
+            if (!newValue.trim()) {
+                result.textContent = "Please enter a valid value.";
+                result.style.color = "red";
+                return;
+            }
+
+            // Simulate a successful profile update
+            result.textContent = `${selectedField.charAt(0).toUpperCase() + selectedField.slice(1)} updated successfully to "${newValue}".`;
+            result.style.color = "green";
+
+            // Reset form
+            document.getElementById("field-input").value = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Profile Update</h2>
+        <p>Select a field to update:</p>
+        <select id="fieldSelect" onchange="showUpdateForm()">
+            <option value="">-- Select Field --</option>
+            <option value="name">Name</option>
+            <option value="email">Email</option>
+            <option value="password">Password</option>
+        </select>
+        <form id="form-container" class="form-container" onsubmit="updateProfile(event)">
+            <label id="field-label"></label>
+            <input id="field-input" type="text" required>
+            <button type="submit">Update</button>
+        </form>
+        <p id="result"></p>
+    </div>
+</body>
+</html>
