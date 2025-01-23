@@ -78,8 +78,6 @@
                 document.getElementById("result").textContent = "Please fill in both fields";
                 return;
             }
-
-            // Simulate successful login
             document.querySelector('form').style.display = 'none';
             document.getElementById("success-message").textContent = "Login Successful!";
             document.getElementById("success-message").style.display = 'block';
@@ -87,13 +85,11 @@
     </script>
 </head>
 <body>
-    <!-- Logo and Heading Section -->
     <div class="header">
         <img src="https://raw.githubusercontent.com/sujithaanu99/dream-and-do/main/plogo.jpg" alt="Logo Image">
         <h3 style="color: white;">LOGIN</h3>
         <p style="color: white;">Enter your credentials</p>
     </div>
-    <!-- Form Section -->
     <form onsubmit="handleLogin(event)">
         <table>
             <tr>
