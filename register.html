@@ -2,56 +2,12 @@
 <html>
 <head>
     <title>Register</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: teal;
-            height: 100vh;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-        }
-        input[type="text"], input[type="password"], input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: teal;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #006d6d;
-        }
-        #result {
-            text-align: center;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
     <script>
-        function registerUser(event) {
+        function checkPassword(event) {
             event.preventDefault();
-            
             var username = document.getElementById("username").value.trim();
-            var password = document.getElementById("password").value.trim();
-            var confirmPassword = document.getElementById("confirm-password").value.trim();
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
 
             if (password !== confirmPassword) {
                 document.getElementById("result").textContent = "Passwords do not match!";
@@ -62,22 +18,22 @@
             localStorage.setItem("username", username);
             localStorage.setItem("password", password);
 
-            document.getElementById("result").textContent = "Registration Successful! Redirecting to Login...";
-            
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 2000);
+            alert("Registration successful! Please log in.");
+            window.location.href = "login.html"; // Redirect to login page
         }
     </script>
 </head>
 <body>
-    <h2 style="color: white;">Register</h2>
-    <form onsubmit="registerUser(event)">
-        <input type="text" id="username" placeholder="Enter Username" required>
-        <input type="password" id="password" placeholder="Enter Password" required>
-        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-        <input type="submit" value="Register">
+    <h2>Register</h2>
+    <form onsubmit="checkPassword(event)">
+        <label>Username:</label>
+        <input type="text" id="username" required><br><br>
+        <label>Password:</label>
+        <input type="password" id="password" required><br><br>
+        <label>Confirm Password:</label>
+        <input type="password" id="confirmPassword" required><br><br>
+        <button type="submit">Register</button>
     </form>
-    <p id="result"></p>
+    <p id="result" style="color: red;"></p>
 </body>
 </html>
