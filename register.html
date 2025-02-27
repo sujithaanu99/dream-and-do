@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register for Dream and Do</title>
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -24,36 +24,26 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Function to handle login
-        window.handleLogin = async function () {
-            const enteredUsername = document.getElementById("username").value.trim();
-            const enteredPassword = document.getElementById("password").value.trim();
+        // Function to register a user
+        window.registerUser = async function () {
+            const name = document.getElementById("name").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-            if (enteredUsername === "" || enteredPassword === "") {
-                alert("Please enter both username and password.");
+            if (name === "" || password === "") {
+                alert("Please fill in all fields.");
                 return;
             }
 
             try {
-                const querySnapshot = await getDocs(collection(db, "users"));
-                let validUser = false;
-
-                querySnapshot.forEach((doc) => {
-                    const user = doc.data();
-                    if (user.name === enteredUsername && user.password === enteredPassword) {
-                        validUser = true;
-                    }
+                await addDoc(collection(db, "users"), {
+                    name: name,
+                    password: password
                 });
-
-                if (validUser) {
-                    document.getElementById("success-message").textContent = "Login Successful!";
-                    document.getElementById("success-message").style.display = "block";
-                    setTimeout(() => window.location.href = "mode.html", 2000);
-                } else {
-                    document.getElementById("result").textContent = "Invalid Username or Password";
-                }
+                alert("User registered successfully!");
+                window.location.href = "login.html"; // Redirect to login page
             } catch (error) {
-                console.error("Error fetching user:", error);
+                console.error("Error registering user:", error);
+                alert("Registration failed!");
             }
         };
     </script>
@@ -97,13 +87,11 @@
     </style>
 </head>
 <body>
-    <h2 style="color: white;">Login</h2>
-    <form onsubmit="event.preventDefault(); handleLogin();">
-        <input type="text" id="username" placeholder="Enter Username" required>
-        <input type="password" id="password" placeholder="Enter Password" required>
-        <button type="submit">Login</button>
+    <h2 style="color: white;">Register</h2>
+    <form onsubmit="event.preventDefault(); registerUser();">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="password" id="password" placeholder="Enter password" required>
+        <button type="submit">Register</button>
     </form>
-    <p id="result" style="color: white; font-weight: bold;"></p>
-    <p id="success-message" style="display: none; color: white; font-weight: bold;"></p>
 </body>
 </html>
