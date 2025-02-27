@@ -10,42 +10,8 @@
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
-            background-color: lightgray;
+            background-color: teal;
             height: 100vh;
-        }
-        .main-page, .registration-page {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-        .main-page {
-            display: flex;
-        }
-        a {
-            text-decoration: none;
-            font-size: 20px;
-            color: white;
-            background-color: teal;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        a:hover {
-            background-color: #006d6d;
-        }
-        body.registration {
-            height: 100%;
-            background-color: teal;
-        }
-        .header {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
         }
         form {
             background: white;
@@ -53,20 +19,14 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             margin-top: 20px;
-        }
-        table {
-            width: 100%;
-        }
-        td {
-            padding: 10px;
-            vertical-align: middle;
         }
         input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid;
+            margin: 5px 0;
+            border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
         }
@@ -75,7 +35,6 @@
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 16px;
         }
         input[type="submit"]:hover {
             background-color: #006d6d;
@@ -85,89 +44,40 @@
             color: white;
             font-weight: bold;
         }
-        #success-message {
-            display: none;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
     </style>
-    <script type="text/javascript">
-        function showRegistrationPage() {
-            document.body.classList.add('registration');
-            document.querySelector('.main-page').style.display = 'none';
-            document.querySelector('.registration-page').style.display = 'flex';
-        }
+    <script>
+        function registerUser(event) {
+            event.preventDefault();
+            
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("password").value.trim();
+            var confirmPassword = document.getElementById("confirm-password").value.trim();
 
-        function checkpassword(event) {
-            event.preventDefault(); // Prevent form submission
-            var pswd = document.getElementById("p1").value;
-            var cPswd = document.getElementById("p2").value;
-
-            if (pswd !== cPswd) {
-                document.getElementById("result").textContent = "Passwords do not match";
-                document.getElementById("result").style.color = "white";
+            if (password !== confirmPassword) {
+                document.getElementById("result").textContent = "Passwords do not match!";
                 return;
             }
 
-            // Display success message and hide the form
-            document.querySelector('.registration-page form').style.display = 'none';
-            document.getElementById("success-message").textContent = "Registration Successful!";
-            document.getElementById("success-message").style.display = 'block';
+            // Store credentials in localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            document.getElementById("result").textContent = "Registration Successful! Redirecting to Login...";
+            
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
         }
     </script>
 </head>
 <body>
-    <!-- Main Page Section -->
-    <div class="main-page">
-        <h1>Welcome to Our Website</h1>
-        <p>Click the link below to register:</p>
-        <a href="#" onclick="showRegistrationPage()">Go to Registration Page</a>
-    </div>
-
-    <!-- Registration Page Section -->
-    <div class="registration-page">
-        <div class="header">
-            <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
-            <h3 style="color: white;">REGISTER</h3>
-            <p style="color: white;">Signup/Register</p>
-        </div>
-        <form onsubmit="checkpassword(event)">
-            <table border="0">
-                <tr>
-                    <td>First Name:</td>
-                    <td><input type="text" name="first_name" maxlength="30" required></td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td><input type="text" name="last_name" maxlength="30" required></td>
-                </tr>
-                <tr>
-                    <td>Enter Password:</td>
-                    <td><input type="password" id="p1" name="password" maxlength="10" required></td>
-                </tr>
-                <tr>
-                    <td>Confirm Password:</td>
-                    <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
-                </tr>
-                <tr>
-                    <td>Gender:</td>
-                    <td>
-                        <input type="radio" name="gender" value="male" required> Male
-                        <input type="radio" name="gender" value="female" required> Female
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="Submit">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <p id="result"></p>
-        <p id="success-message"></p>
-    </div>
+    <h2 style="color: white;">Register</h2>
+    <form onsubmit="registerUser(event)">
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+        <input type="submit" value="Register">
+    </form>
+    <p id="result"></p>
 </body>
 </html>
