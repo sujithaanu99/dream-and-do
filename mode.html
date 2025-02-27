@@ -25,25 +25,42 @@
             width: 100%;
         }
         select {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
             width: 100%;
-            box-sizing: border-box;
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            appearance: none; /* Removes default dropdown arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="black" d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+        }
+        select:hover {
+            background-color: #e0e0e0;
+        }
+        select:focus {
+            outline: none;
+            border: 2px solid teal;
         }
         button {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 20px;
             background-color: teal;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
         }
         button:hover {
             background-color: #006d6d;
+            transform: scale(1.05);
         }
     </style>
     <script>
@@ -65,8 +82,8 @@
         <p>Select a mode to proceed:</p>
         <select id="modeSelect">
             <option value="">-- Select Mode --</option>
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
+            <option value="online">🌍 Online</option>
+            <option value="offline">📶 Offline</option>
         </select>
         <button onclick="redirectToPage()">Submit</button>
     </div>
