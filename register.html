@@ -87,51 +87,58 @@
         </table>
     </form>
     <p id="result"></p>
+<script type="module">
+  // Import Firebase modules correctly
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-            authDomain: "dreamanddo-b78e6.firebaseapp.com",
-            projectId: "dreamanddo-b78e6",
-            storageBucket: "dreamanddo-b78e6.firebasestorage.app",
-            messagingSenderId: "52287172119",
-            appId: "1:52287172119:web:6227752526f43d2ccb7652",
-            measurementId: "G-15WBNVGWTR"
-        };
+  // Firebase Config
+  const firebaseConfig = {
+      apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+      authDomain: "dreamanddo-b78e6.firebaseapp.com",
+      projectId: "dreamanddo-b78e6",
+      storageBucket: "dreamanddo-b78e6.firebasestorage.app",
+      messagingSenderId: "52287172119",
+      appId: "1:52287172119:web:6227752526f43d2ccb7652",
+      measurementId: "G-15WBNVGWTR"
+  };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        // Register User Function
-        function registerUser(event) {
-            event.preventDefault();
-            let userName = document.getElementById("name").value.trim();
-            let password = document.getElementById("password").value.trim();
+  // Register User Function
+  async function registerUser(event) {
+      event.preventDefault();  // Prevent form from reloading
 
-            if (userName === "" || password === "") {
-                document.getElementById("result").textContent = "Please fill all fields.";
-                return;
-            }
+      let userName = document.getElementById("name").value.trim();
+      let password = document.getElementById("password").value.trim();
 
-            db.collection("users").where("name", "==", userName).get()
-                .then(querySnapshot => {
-                    if (!querySnapshot.empty) {
-                        document.getElementById("result").textContent = "Username already taken!";
-                    } else {
-                        db.collection("users").add({ name: userName, password: password })
-                            .then(() => {
-                                document.getElementById("result").textContent = "Registration Successful!";
-                                setTimeout(() => {
-                                    window.location.href = "login.html"; 
-                                }, 2000);
-                            })
-                            .catch(error => console.error("Error: ", error));
-                    }
-                })
-                .catch(error => console.error("Error checking user: ", error));
-        }
-    </script>
+      if (userName === "" || password === "") {
+          document.getElementById("result").textContent = "Please fill all fields.";
+          return;
+      }
+
+      try {
+          const docRef = await addDoc(collection(db, "users"), {
+              name: userName,
+              password: password
+          });
+          console.log("User registered successfully! Document ID:", docRef.id);
+          document.getElementById("result").textContent = "Registration Successful!";
+          
+          setTimeout(() => {
+              window.location.href = "login.html"; 
+          }, 2000);
+      } catch (error) {
+          console.error("Error writing document:", error);
+      }
+  }
+
+  // Attach event listener to form
+  document.querySelector("form").onsubmit = registerUser;
+</script>
+
+
 </body>
 </html>
