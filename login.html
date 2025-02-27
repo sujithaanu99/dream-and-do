@@ -122,16 +122,18 @@
             }
         }
         window.handleLogin = handleLogin;
-
+    </script>
+    <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
             const eyeIcon = document.getElementById("eye-icon");
+
             if (passwordField.type === "password") {
                 passwordField.type = "text";
-                eyeIcon.textContent = "👁️";
+                eyeIcon.textContent = "🙈"; // Eye closed emoji when visible
             } else {
                 passwordField.type = "password";
-                eyeIcon.textContent = "👁️‍🗨️";
+                eyeIcon.textContent = "👁️"; // Eye open emoji when hidden
             }
         }
     </script>
@@ -153,7 +155,7 @@
                 <td>
                     <div class="password-container">
                         <input type="password" id="password" name="password" maxlength="10" required>
-                        <span id="eye-icon" class="eye-icon" onclick="togglePassword()">👁️‍🗨️</span>
+                        <span id="eye-icon" class="eye-icon" onclick="togglePassword()">👁️</span>
                     </div>
                 </td>
             </tr>
