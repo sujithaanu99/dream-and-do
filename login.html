@@ -2,6 +2,72 @@
 <html>
 <head>
     <title>Login</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+        input[type="text"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: teal;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #006d6d;
+        }
+        #result {
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        #success-message {
+            display: none;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
     <script type="text/javascript">
         function handleLogin(event) {
             event.preventDefault();
@@ -13,12 +79,12 @@
             var storedPassword = localStorage.getItem("password");
 
             if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+                document.querySelector('form').style.display = 'none';
                 document.getElementById("success-message").textContent = "Login Successful!";
                 document.getElementById("success-message").style.display = 'block';
 
-                // Redirect to mode selection page after 2 seconds
                 setTimeout(() => {
-                    window.location.href = "mode.html";
+                    window.location.href = "mode.html"; // Redirect to mode selection page
                 }, 2000);
             } else {
                 document.getElementById("result").textContent = "Invalid Username or Password";
@@ -27,15 +93,150 @@
     </script>
 </head>
 <body>
-    <h2>LOGIN</h2>
+    <div class="header">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
+        <h3 style="color: white;">LOGIN</h3>
+        <p style="color: white;">Enter your credentials</p>
+    </div>
     <form onsubmit="handleLogin(event)">
-        <label>Username:</label>
-        <input type="text" id="username" required><br><br>
-        <label>Password:</label>
-        <input type="password" id="password" required><br><br>
-        <button type="submit">Login</button>
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Login">
+                </td>
+            </tr>
+        </table>
     </form>
-    <p id="result" style="color: red;"></p>
-    <p id="success-message" style="color: green; display: none;"></p>
+    <p id="result"></p>
+    <p id="success-message"></p>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+        input[type="text"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: teal;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #006d6d;
+        }
+        #result {
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        #success-message {
+            display: none;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        function handleLogin(event) {
+            event.preventDefault();
+            var enteredUsername = document.getElementById("username").value.trim();
+            var enteredPassword = document.getElementById("password").value.trim();
+
+            // Retrieve stored credentials
+            var storedUsername = localStorage.getItem("username");
+            var storedPassword = localStorage.getItem("password");
+
+            if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+                document.querySelector('form').style.display = 'none';
+                document.getElementById("success-message").textContent = "Login Successful!";
+                document.getElementById("success-message").style.display = 'block';
+
+                setTimeout(() => {
+                    window.location.href = "mode.html"; // Redirect to mode selection page
+                }, 2000);
+            } else {
+                document.getElementById("result").textContent = "Invalid Username or Password";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
+        <h3 style="color: white;">LOGIN</h3>
+        <p style="color: white;">Enter your credentials</p>
+    </div>
+    <form onsubmit="handleLogin(event)">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Login">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p id="result"></p>
+    <p id="success-message"></p>
 </body>
 </html>
