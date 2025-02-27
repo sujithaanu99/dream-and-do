@@ -30,31 +30,27 @@
         const db = firebase.firestore();
 
         // Function to register a user
-        function registerUser() {
-            let userName = document.getElementById("name").value.trim();
-            let password = document.getElementById("password").value.trim();
+       function registerUser(event) {
+    event.preventDefault();
+    let userName = document.getElementById("name").value.trim();
+    let password = document.getElementById("password").value.trim();
 
-            if (userName === "" || password === "") {
-                alert("Please enter both name and password.");
-                return;
-            }
+    if (userName === "" || password === "") {
+        document.getElementById("result").textContent = "Please fill all fields.";
+        return;
+    }
 
-            // Check if user already exists
-            db.collection("users").where("name", "==", userName).get()
-                .then(querySnapshot => {
-                    if (!querySnapshot.empty) {
-                        alert("User already exists! Please log in.");
-                    } else {
-                        db.collection("users").add({ name: userName, password: password })
-                            .then(() => {
-                                alert("User Registered Successfully!");
-                                window.location.href = "login.html"; // Redirect to login page
-                            })
-                            .catch(error => console.error("Error: ", error));
-                    }
-                })
-                .catch(error => console.error("Error checking user: ", error));
-        }
+    db.collection("users").add({ name: userName, password: password })
+        .then((docRef) => {
+            console.log("User registered successfully! Document ID:", docRef.id);
+            document.getElementById("result").textContent = "Registration Successful!";
+            setTimeout(() => {
+                window.location.href = "login.html"; 
+            }, 2000);
+        })
+        .catch(error => console.error("Error writing document:", error));
+}
+
     </script>
 </body>
 </html>
