@@ -10,35 +10,50 @@
 <body>
     <h1>Register for Dream and Do</h1>
     <input type="text" id="name" placeholder="Enter your name">
+    <input type="password" id="password" placeholder="Enter a password">
     <button onclick="registerUser()">Register</button>
 
     <script>
-        // Firebase Config (Replace with your actual Firebase project details)
-  const firebaseConfig = {
-    apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-    authDomain: "dreamanddo-b78e6.firebaseapp.com",
-    projectId: "dreamanddo-b78e6",
-    storageBucket: "dreamanddo-b78e6.firebasestorage.app",
-    messagingSenderId: "52287172119",
-    appId: "1:52287172119:web:6227752526f43d2ccb7652",
-    measurementId: "G-15WBNVGWTR"
-  };
-        
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+            authDomain: "dreamanddo-b78e6.firebaseapp.com",
+            projectId: "dreamanddo-b78e6",
+            storageBucket: "dreamanddo-b78e6.firebasestorage.app",
+            messagingSenderId: "52287172119",
+            appId: "1:52287172119:web:6227752526f43d2ccb7652",
+            measurementId: "G-15WBNVGWTR"
+        };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         // Function to register a user
         function registerUser() {
-            let userName = document.getElementById("name").value;
-            if (userName.trim() === "") {
-                alert("Please enter a name.");
+            let userName = document.getElementById("name").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            if (userName === "" || password === "") {
+                alert("Please enter both name and password.");
                 return;
             }
 
-            db.collection("users").add({ name: userName })
-                .then(() => alert("User Registered Successfully!"))
-                .catch(error => console.error("Error: ", error));
+            // Check if user already exists
+            db.collection("users").where("name", "==", userName).get()
+                .then(querySnapshot => {
+                    if (!querySnapshot.empty) {
+                        alert("User already exists! Please log in.");
+                    } else {
+                        db.collection("users").add({ name: userName, password: password })
+                            .then(() => {
+                                alert("User Registered Successfully!");
+                                window.location.href = "login.html"; // Redirect to login page
+                            })
+                            .catch(error => console.error("Error: ", error));
+                    }
+                })
+                .catch(error => console.error("Error checking user: ", error));
         }
     </script>
 </body>
