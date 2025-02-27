@@ -1,141 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: teal;
-            height: 100vh;
-        }
-        .header {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 500px;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-        }
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
-        input[type="text"], input[type="password"], input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: teal;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        input[type="submit"]:hover {
-            background-color: #006d6d;
-        }
-        #result {
-            text-align: center;
-            color: white;
-            font-weight: bold;
-        }
-        #success-message {
-            display: none;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
-    <script type="text/javascript">
-        function checkPassword(event) {
-            event.preventDefault(); // Prevent form submission
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for Dream and Do</title>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <h1>Register for Dream and Do</h1>
+    <input type="text" id="name" placeholder="Enter your name">
+    <button onclick="registerUser()">Register</button>
 
-            var username = document.getElementById("username").value.trim();
-            var password = document.getElementById("p1").value;
-            var confirmPassword = document.getElementById("p2").value;
+    <script>
+        // Firebase Config (Replace with your actual Firebase project details)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+    authDomain: "dreamanddo-b78e6.firebaseapp.com",
+    projectId: "dreamanddo-b78e6",
+    storageBucket: "dreamanddo-b78e6.appspot.com",
+    messagingSenderId: "52287172119",
+    appId: "1:52287172119:web:93b402b21afc094ecb7652",
+    measurementId: "G-RKBT66WR0X"
+  };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-            if (password !== confirmPassword) {
-                document.getElementById("result").textContent = "Passwords do not match!";
+        // Function to register a user
+        function registerUser() {
+            let userName = document.getElementById("name").value;
+            if (userName.trim() === "") {
+                alert("Please enter a name.");
                 return;
             }
 
-            // Store credentials in localStorage
-            localStorage.setItem("username", username);
-            localStorage.setItem("password", password);
-
-            // Hide form and show success message
-            document.querySelector('form').style.display = 'none';
-            document.getElementById("success-message").textContent = "Registration Successful!";
-            document.getElementById("success-message").style.display = 'block';
-
-            setTimeout(() => {
-                window.location.href = "login.html"; // Redirect to login page
-            }, 2000);
+            db.collection("users").add({ name: userName })
+                .then(() => alert("User Registered Successfully!"))
+                .catch(error => console.error("Error: ", error));
         }
     </script>
-</head>
-<body>
-
-    <!-- Registration Page Section -->
-    <div class="header">
-        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
-        <h3 style="color: white;">REGISTER</h3>
-        <p style="color: white;">Signup/Register</p>
-    </div>
-    
-    <form onsubmit="checkPassword(event)">
-        <table border="0">
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" id="username" maxlength="30" required></td>
-            </tr>
-            <tr>
-                <td>Enter Password:</td>
-                <td><input type="password" id="p1" name="password" maxlength="10" required></td>
-            </tr>
-            <tr>
-                <td>Confirm Password:</td>
-                <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
-            </tr>
-            <tr>
-                <td>Gender:</td>
-                <td>
-                    <input type="radio" name="gender" value="male" required> Male
-                    <input type="radio" name="gender" value="female" required> Female
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Register">
-                </td>
-            </tr>
-        </table>
-    </form>
-
-<!--     <p id="result"></p> -->
-    <p id="success-message"></p>
-
 </body>
 </html>
