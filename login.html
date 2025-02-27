@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
     <style>
         body {
             height: 100vh;
@@ -33,13 +29,6 @@
             max-width: 400px;
             margin-top: 20px;
         }
-        table {
-            width: 100%;
-        }
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
         input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
             padding: 10px;
@@ -62,89 +51,69 @@
             color: white;
             font-weight: bold;
         }
+        #success-message {
+            display: none;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            /* Your Firebase Config */
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            let enteredUsername = document.getElementById("username").value.trim();
+            let enteredPassword = document.getElementById("password").value.trim();
+            let resultElement = document.getElementById("result");
+
+            if (enteredUsername === "" || enteredPassword === "") {
+                resultElement.textContent = "Please fill all fields.";
+                return;
+            }
+
+            try {
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("name", "==", enteredUsername), where("password", "==", enteredPassword));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    document.querySelector("form").style.display = "none";
+                    document.getElementById("success-message").textContent = "Login Successful!";
+                    document.getElementById("success-message").style.display = "block";
+                    setTimeout(() => window.location.href = "mode.html", 2000);
+                } else {
+                    resultElement.textContent = "Invalid Username or Password";
+                }
+            } catch (error) {
+                console.error("Error fetching user:", error);
+                resultElement.textContent = "Error logging in.";
+            }
+        }
+
+        window.handleLogin = handleLogin;
+    </script>
 </head>
 <body>
-    <div class="header">
-        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
-        <h3 style="color: white;">LOGIN</h3>
-    </div>
+    <div class="header"><h3 style="color: white;">LOGIN</h3></div>
     <form onsubmit="handleLogin(event)">
         <table>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" id="username" name="username" maxlength="30" required></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" id="password" name="password" maxlength="10" required></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Login">
-                </td>
-            </tr>
+            <tr><td>Username:</td><td><input type="text" id="username" required></td></tr>
+            <tr><td>Password:</td><td><input type="password" id="password" required></td></tr>
+            <tr><td colspan="2"><input type="submit" value="Login"></td></tr>
         </table>
     </form>
     <p id="result"></p>
-
-    <script type="module">
-  // Import Firebase modules correctly
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-
-  // Firebase Config (same as in register.html)
-  const firebaseConfig = {
-      apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-      authDomain: "dreamanddo-b78e6.firebaseapp.com",
-      projectId: "dreamanddo-b78e6",
-      storageBucket: "dreamanddo-b78e6.firebasestorage.app",
-      messagingSenderId: "52287172119",
-      appId: "1:52287172119:web:6227752526f43d2ccb7652",
-      measurementId: "G-15WBNVGWTR"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Function to Handle Login
-  async function handleLogin(event) {
-      event.preventDefault();
-      let enteredUsername = document.getElementById("username").value.trim();
-      let enteredPassword = document.getElementById("password").value.trim();
-
-      if (enteredUsername === "" || enteredPassword === "") {
-          document.getElementById("result").textContent = "Please fill all fields.";
-          return;
-      }
-
-      try {
-          // Query Firestore to find the user with matching credentials
-          const usersRef = collection(db, "users");
-          const q = query(usersRef, where("name", "==", enteredUsername), where("password", "==", enteredPassword));
-          const querySnapshot = await getDocs(q);
-
-          if (!querySnapshot.empty) {
-              document.querySelector('form').style.display = 'none';
-              document.getElementById("success-message").textContent = "Login Successful!";
-              document.getElementById("success-message").style.display = 'block';
-
-              setTimeout(() => {
-                  window.location.href = "mode.html"; // Redirect after login
-              }, 2000);
-          } else {
-              document.getElementById("result").textContent = "Invalid Username or Password";
-          }
-      } catch (error) {
-          console.error("Error fetching user:", error);
-          document.getElementById("result").textContent = "Error logging in.";
-      }
-  }
-
-  // Attach event listener to the login form
-  document.querySelector("form").onsubmit = handleLogin;
-</script>
-
+    <p id="success-message"></p>
 </body>
 </html>
