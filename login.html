@@ -15,6 +15,7 @@
         }
         .header {
             text-align: center;
+            margin-bottom: 20px;
         }
         .header img {
             max-width: 150px;
@@ -27,7 +28,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
-            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            vertical-align: middle;
         }
         input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
@@ -57,6 +64,7 @@
             text-align: center;
             font-size: 18px;
             font-weight: bold;
+            margin-top: 20px;
         }
     </style>
     <script type="module">
@@ -72,19 +80,18 @@
 
         async function handleLogin(event) {
             event.preventDefault();
-
-            let enteredUsername = document.getElementById("username").value.trim();
-            let enteredPassword = document.getElementById("password").value.trim();
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
             let resultElement = document.getElementById("result");
 
-            if (enteredUsername === "" || enteredPassword === "") {
-                resultElement.textContent = "Please fill all fields.";
+            if (!username || !password) {
+                resultElement.textContent = "Please fill in both fields.";
                 return;
             }
 
             try {
                 const usersRef = collection(db, "users");
-                const q = query(usersRef, where("name", "==", enteredUsername), where("password", "==", enteredPassword));
+                const q = query(usersRef, where("name", "==", username), where("password", "==", password));
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
@@ -100,17 +107,30 @@
                 resultElement.textContent = "Error logging in.";
             }
         }
-
         window.handleLogin = handleLogin;
     </script>
 </head>
 <body>
-    <div class="header"><h3 style="color: white;">LOGIN</h3></div>
+    <div class="header">
+        <img src="plogo.jpg" alt="Logo Image">
+        <h3 style="color: white;">LOGIN</h3>
+        <p style="color: white;">Enter your credentials</p>
+    </div>
     <form onsubmit="handleLogin(event)">
         <table>
-            <tr><td>Username:</td><td><input type="text" id="username" required></td></tr>
-            <tr><td>Password:</td><td><input type="password" id="password" required></td></tr>
-            <tr><td colspan="2"><input type="submit" value="Login"></td></tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Login">
+                </td>
+            </tr>
         </table>
     </form>
     <p id="result"></p>
