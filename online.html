@@ -1,6 +1,86 @@
-<html>
-  <head>online mode</head>
-  <body>
-    this is online page
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Classes at Home in Visakhapatnam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #008080;
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .workshops {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .workshop {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            font-size: 22px;
+            color: black;
+        }
+        .workshop:hover {
+            transform: scale(1.2);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #workshop-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Available Drawing Classes
+    </header>
+    <main>
+        <div class="workshops" id="workshops-container">
+            <div class="workshop" onclick="loadWorkshop('chitralekhanam.html')">🎨 Chitralekhanam (4.8⭐, 150 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('dreams_studio.html')">🩰 DREAMS STUDIO (4.6⭐, 25 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('shanti_art.html')">🎭 Shanti Art Studio (4.4⭐, 7 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('achievers.html')">💻 Achievers Destination Academy (4.0⭐, 2 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('gayatri_arts.html')">🖌️ Gayatri Arts (3.9⭐, 7 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('srinus.html')">🖍️ Srinus Drawing Tuition (5.0⭐, 1 Rating)</div>
+            <div class="workshop" onclick="loadWorkshop('rockon_music.html')">🎵 Rockon Music Coaching (4.2⭐, 9 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('pencil_art.html')">✏️ Pencil Art Workshop (5.0⭐, 184 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('ritesh_art.html')">🖼️ Ritesh Art Classes (5.0⭐, 1 Rating)</div>
+            <div class="workshop" onclick="loadWorkshop('chitram_arts.html')">🖌️ Chitram Arts (4.8⭐, 474 Ratings)</div>
+        </div>
+        <iframe id="workshop-frame"></iframe>
+    </main>
+    <script>
+        function loadWorkshop(workshopPage) {
+            document.getElementById('workshops-container').style.display = 'none';
+            let frame = document.getElementById('workshop-frame');
+            frame.src = workshopPage;
+            frame.style.display = 'block';
+        }
+    </script>
+</body>
 </html>
