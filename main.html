@@ -15,6 +15,7 @@
             color: white;
             height: 100vh;
             justify-content: center;
+            position: relative;
         }
         .container {
             display: flex;
@@ -50,10 +51,36 @@
             text-decoration: none;
             display: block;
         }
+        /* Profile Update Button in Top Right */
+        .profile-update {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .profile-update:hover {
+            transform: scale(1.1);
+        }
+        .profile-update a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h2>Welcome DREAM AND DO</h2>
+    <!-- Profile Update Button (Top Right Corner) -->
+    <div class="profile-update">
+        <a href="update.html">👤 Profile Update</a>
+    </div>
+
+    <h2>Welcome to DREAM AND DO</h2>
 
     <div class="container">
         <!-- Register Section -->
@@ -72,12 +99,6 @@
         <div class="section">
             <div class="icon">🌐</div>
             <a href="mode.html"> <h3>Mode</h3></a>
-        </div>
-
-        <!-- Profile Update Section -->
-        <div class="section">
-            <div class="icon">👤</div>
-            <a href="update.html"><h3>Profile Update</h3></a>
         </div>
     </div>
 </body>
