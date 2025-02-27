@@ -13,14 +13,6 @@
             background-color: teal;
             font-family: Arial, sans-serif;
         }
-        .header {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
-        }
         form {
             background: white;
             padding: 20px;
@@ -30,16 +22,10 @@
             max-width: 400px;
             margin-top: 20px;
         }
-        table {
-            width: 100%;
-        }
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
         input[type="text"], input[type="password"], input[type="submit"] {
             width: 100%;
             padding: 10px;
+            margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
@@ -49,7 +35,6 @@
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 16px;
         }
         input[type="submit"]:hover {
             background-color: #006d6d;
@@ -59,27 +44,11 @@
             color: white;
             font-weight: bold;
         }
-        #success-message {
-            display: none;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        #forgot-password {
-            text-align: center;
-            margin-top: 10px;
-        }
-        #forgot-password a {
-            color: white;
-            text-decoration: underline;
-            cursor: pointer;
-        }
     </style>
-    <script type="text/javascript">
+    <script>
         function handleLogin(event) {
             event.preventDefault();
+            
             var enteredUsername = document.getElementById("username").value.trim();
             var enteredPassword = document.getElementById("password").value.trim();
 
@@ -88,57 +57,24 @@
             var storedPassword = localStorage.getItem("password");
 
             if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
-                document.querySelector('form').style.display = 'none';
-                document.getElementById("success-message").textContent = "Login Successful!";
-                document.getElementById("success-message").style.display = 'block';
-
-                // Redirect after 2 seconds
-                setTimeout(function() {
+                document.getElementById("result").textContent = "Login Successful! Redirecting...";
+                
+                setTimeout(() => {
                     window.location.href = "dashboard.html";
                 }, 2000);
             } else {
                 document.getElementById("result").textContent = "Invalid Username or Password";
             }
         }
-
-        function resetPassword() {
-            var newPassword = prompt("Enter your new password:");
-            if (newPassword) {
-                localStorage.setItem("password", newPassword);
-                alert("Password reset successful! Please login with your new password.");
-            }
-        }
     </script>
 </head>
 <body>
-    <div class="header">
-        <img src="plogo.jpg" alt="Logo Image">
-        <h3 style="color: white;">LOGIN</h3>
-        <p style="color: white;">Enter your credentials</p>
-    </div>
+    <h2 style="color: white;">Login</h2>
     <form onsubmit="handleLogin(event)">
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" id="username" name="username" maxlength="30" required></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" id="password" name="password" maxlength="10" required></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Login">
-                </td>
-            </tr>
-        </table>
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <input type="submit" value="Login">
     </form>
     <p id="result"></p>
-    <p id="success-message"></p>
-
-    <!-- Forgot Password -->
-    <p id="forgot-password">
-        <a href="#" onclick="resetPassword()">Forgot Password?</a>
-    </p>
 </body>
 </html>
