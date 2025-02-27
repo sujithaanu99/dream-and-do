@@ -3,89 +3,96 @@
 <head>
     <title>Mode Selection</title>
     <style>
+        @keyframes bgAnimation {
+            0% { background-color: teal; }
+            50% { background-color: #008B8B; }
+            100% { background-color: teal; }
+        }
+        
         body {
-            height: 100%;
+            height: 100vh;
             margin: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: teal;
+            animation: bgAnimation 5s infinite alternate;
             font-family: Arial, sans-serif;
             color: white;
-        }
-        .container {
             text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: white;
-            color: black;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background 1.5s ease-in-out;
         }
-        select {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            width: 100%;
-            background-color: #f0f0f0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            appearance: none; /* Removes default dropdown arrow */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="black" d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 20px;
-        }
-        select:hover {
-            background-color: #e0e0e0;
-        }
-        select:focus {
-            outline: none;
-            border: 2px solid teal;
-        }
-        button {
+        
+        .header {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 40px;
+            font-weight: bold;
             margin-top: 20px;
-            padding: 12px 20px;
-            background-color: teal;
-            color: white;
+            position: absolute;
+            top: 10px;
+        }
+        
+        .mode-buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        
+        .mode-button {
+            padding: 15px 25px;
+            background-color: white;
+            color: teal;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 20px;
             cursor: pointer;
-            transition: all 0.3s ease-in-out;
+            width: 200px;
+            text-align: center;
         }
-        button:hover {
-            background-color: #006d6d;
-            transform: scale(1.05);
-        }
+        
     </style>
-    <script>
-        function redirectToPage() {
-            const mode = document.getElementById("modeSelect").value;
-            if (mode === "online") {
-                window.location.href = "online.html";
-            } else if (mode === "offline") {
-                window.location.href = "offline.html";
-            } else {
-                alert("Please select a mode before submitting.");
-            }
-        }
-    </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Mode Selection</h2>
-        <p>Select a mode to proceed:</p>
-        <select id="modeSelect">
-            <option value="">-- Select Mode --</option>
-            <option value="online">🌍 Online</option>
-            <option value="offline">📶 Offline</option>
-        </select>
-        <button onclick="redirectToPage()">Submit</button>
+    <div class="header">Mode Selection</div>
+    <div class="mode-buttons">
+        <button class="mode-button" id="online-button" onclick="window.location.href='online.html'">🌐 Online</button>
+        <button class="mode-button" id="offline-button" onclick="window.location.href='offline.html'">🏫 Offline</button>
     </div>
+    
+    <script>
+        let onlineButton = document.getElementById("online-button");
+        let offlineButton = document.getElementById("offline-button");
+        let hoverTimer;
+        
+        function setBackground(image) {
+            document.body.style.background = `url('${image}') center/cover no-repeat`;
+        }
+        
+        function resetBackground() {
+            document.body.style.background = "teal";
+        }
+        
+        onlineButton.addEventListener("mouseenter", () => {
+            hoverTimer = setTimeout(() => setBackground('online.png'), 1000);
+        });
+        onlineButton.addEventListener("mouseleave", () => {
+            clearTimeout(hoverTimer);
+            resetBackground();
+        });
+        
+        offlineButton.addEventListener("mouseenter", () => {
+            hoverTimer = setTimeout(() => setBackground('offline.webp'), 1000);
+        });
+        offlineButton.addEventListener("mouseleave", () => {
+            clearTimeout(hoverTimer);
+            resetBackground();
+        });
+    </script>
 </body>
 </html>
