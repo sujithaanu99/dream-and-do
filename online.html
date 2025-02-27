@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawing Classes at Home in Visakhapatnam</title>
+    <title>Online Workshops</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -33,6 +33,7 @@
         }
         .workshop {
             padding: 30px;
+            width: 200px;
             background: white;
             border-radius: 10px;
             border: 2px solid #ddd;
@@ -42,6 +43,7 @@
             position: relative;
             font-size: 22px;
             color: black;
+            text-align: center;
         }
         .workshop:hover {
             transform: scale(1.2);
@@ -57,20 +59,15 @@
 </head>
 <body>
     <header>
-        Available Drawing Classes
+        Available Online Workshops
     </header>
     <main>
         <div class="workshops" id="workshops-container">
-            <div class="workshop" onclick="loadWorkshop('chitralekhanam.html')">🎨 Chitralekhanam (4.8⭐, 150 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('dreams_studio.html')">🩰 DREAMS STUDIO (4.6⭐, 25 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('shanti_art.html')">🎭 Shanti Art Studio (4.4⭐, 7 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('achievers.html')">💻 Achievers Destination Academy (4.0⭐, 2 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('gayatri_arts.html')">🖌️ Gayatri Arts (3.9⭐, 7 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('srinus.html')">🖍️ Srinus Drawing Tuition (5.0⭐, 1 Rating)</div>
-            <div class="workshop" onclick="loadWorkshop('rockon_music.html')">🎵 Rockon Music Coaching (4.2⭐, 9 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('pencil_art.html')">✏️ Pencil Art Workshop (5.0⭐, 184 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('ritesh_art.html')">🖼️ Ritesh Art Classes (5.0⭐, 1 Rating)</div>
-            <div class="workshop" onclick="loadWorkshop('chitram_arts.html')">🖌️ Chitram Arts (4.8⭐, 474 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('coding.html')">💻 Coding Bootcamp</div>
+            <div class="workshop" onclick="loadWorkshop('marketing.html')">📈 Digital Marketing</div>
+            <div class="workshop" onclick="loadWorkshop('design.html')">🎨 Graphic Design</div>
+            <div class="workshop" onclick="loadWorkshop('writing.html')">✍️ Creative Writing</div>
+            <div class="workshop" onclick="loadWorkshop('fitness.html')">🏋️‍♂️ Online Fitness</div>
         </div>
         <iframe id="workshop-frame"></iframe>
     </main>
