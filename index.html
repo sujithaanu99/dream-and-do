@@ -11,15 +11,15 @@
             box-sizing: border-box;
         }
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
             width: 100vw;
             background-color: teal;
             overflow: hidden;
         }
-        .logo-container img {
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
             object-fit: cover;
@@ -28,11 +28,9 @@
     </style>
 </head>
 <body>
-    <div class="logo-container">
-        <a href="main.html">
-            <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" 
-                 alt="Dream and Do Logo">
-        </a>
-    </div>
+    <a href="main.html">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" 
+             alt="Dream and Do Logo">
+    </a>
 </body>
 </html>
