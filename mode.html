@@ -45,45 +45,16 @@
         button:hover {
             background-color: #006d6d;
         }
-        #workshop-list {
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        #workshop-list ul {
-            list-style: none;
-            padding: 0;
-        }
-        #workshop-list ul li {
-            padding: 5px 0;
-            color: #333;
-        }
     </style>
     <script>
-        function showWorkshops() {
+        function redirectToPage() {
             const mode = document.getElementById("modeSelect").value;
-            const workshopList = document.getElementById("workshop-list");
-            workshopList.innerHTML = ""; // Clear previous list
-
             if (mode === "online") {
-                const onlineWorkshops = [
-                    "Web Development Basics",
-                    "AI for Beginners",
-                    "Cloud Computing Essentials",
-                ];
-                workshopList.innerHTML = "<h3>Online Workshops</h3><ul>" +
-                    onlineWorkshops.map(w => `<li>${w}</li>`).join("") +
-                    "</ul>";
+                window.location.href = "online.html";
             } else if (mode === "offline") {
-                const offlineWorkshops = [
-                    "Hands-on Robotics",
-                    "IoT Applications Workshop",
-                    "Sustainable Agriculture Techniques",
-                ];
-                workshopList.innerHTML = "<h3>Offline Workshops</h3><ul>" +
-                    offlineWorkshops.map(w => `<li>${w}</li>`).join("") +
-                    "</ul>";
+                window.location.href = "offline.html";
             } else {
-                workshopList.textContent = "Please select a mode to view workshops.";
+                alert("Please select a mode before submitting.");
             }
         }
     </script>
@@ -91,14 +62,13 @@
 <body>
     <div class="container">
         <h2>Mode Selection</h2>
-        <p>Select a mode to see the available workshops:</p>
+        <p>Select a mode to proceed:</p>
         <select id="modeSelect">
             <option value="">-- Select Mode --</option>
             <option value="online">Online</option>
             <option value="offline">Offline</option>
         </select>
-        <button onclick="showWorkshops()">Submit</button>
-        <div id="workshop-list"></div>
+        <button onclick="redirectToPage()">Submit</button>
     </div>
 </body>
 </html>
