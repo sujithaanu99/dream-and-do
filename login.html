@@ -88,21 +88,63 @@
     </form>
     <p id="result"></p>
 
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            let userName = document.getElementById("username").value.trim();
-            let password = document.getElementById("password").value.trim();
+    <script type="module">
+  // Import Firebase modules correctly
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-            db.collection("users").where("name", "==", userName).where("password", "==", password).get()
-                .then(querySnapshot => {
-                    if (!querySnapshot.empty) {
-                        window.location.href = "mode.html"; 
-                    } else {
-                        document.getElementById("result").textContent = "Invalid Username or Password";
-                    }
-                });
-        }
-    </script>
+  // Firebase Config (same as in register.html)
+  const firebaseConfig = {
+      apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+      authDomain: "dreamanddo-b78e6.firebaseapp.com",
+      projectId: "dreamanddo-b78e6",
+      storageBucket: "dreamanddo-b78e6.firebasestorage.app",
+      messagingSenderId: "52287172119",
+      appId: "1:52287172119:web:6227752526f43d2ccb7652",
+      measurementId: "G-15WBNVGWTR"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Function to Handle Login
+  async function handleLogin(event) {
+      event.preventDefault();
+      let enteredUsername = document.getElementById("username").value.trim();
+      let enteredPassword = document.getElementById("password").value.trim();
+
+      if (enteredUsername === "" || enteredPassword === "") {
+          document.getElementById("result").textContent = "Please fill all fields.";
+          return;
+      }
+
+      try {
+          // Query Firestore to find the user with matching credentials
+          const usersRef = collection(db, "users");
+          const q = query(usersRef, where("name", "==", enteredUsername), where("password", "==", enteredPassword));
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+              document.querySelector('form').style.display = 'none';
+              document.getElementById("success-message").textContent = "Login Successful!";
+              document.getElementById("success-message").style.display = 'block';
+
+              setTimeout(() => {
+                  window.location.href = "mode.html"; // Redirect after login
+              }, 2000);
+          } else {
+              document.getElementById("result").textContent = "Invalid Username or Password";
+          }
+      } catch (error) {
+          console.error("Error fetching user:", error);
+          document.getElementById("result").textContent = "Error logging in.";
+      }
+  }
+
+  // Attach event listener to the login form
+  document.querySelector("form").onsubmit = handleLogin;
+</script>
+
 </body>
 </html>
