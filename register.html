@@ -11,14 +11,15 @@
 
         // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-            authDomain: "dreamanddo-b78e6.firebaseapp.com",
-            projectId: "dreamanddo-b78e6",
-            storageBucket: "dreamanddo-b78e6.firebasestorage.app",
-            messagingSenderId: "52287172119",
-            appId: "1:52287172119:web:6227752526f43d2ccb7652",
-            measurementId: "G-15WBNVGWTR"
-        };
+    apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+    authDomain: "dreamanddo-b78e6.firebaseapp.com",
+    projectId: "dreamanddo-b78e6",
+    storageBucket: "dreamanddo-b78e6.appspot.com",  // ✅ FIXED: Corrected Storage Bucket URL
+    messagingSenderId: "52287172119",
+    appId: "1:52287172119:web:6227752526f43d2ccb7652",
+    measurementId: "G-15WBNVGWTR"
+};
+
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
