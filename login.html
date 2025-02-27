@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
     <style>
         body {
             height: 100vh;
@@ -15,7 +19,6 @@
         }
         .header {
             text-align: center;
-            margin-top: 20px;
         }
         .header img {
             max-width: 150px;
@@ -59,44 +62,12 @@
             color: white;
             font-weight: bold;
         }
-        #success-message {
-            display: none;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
     </style>
-    <script type="text/javascript">
-        function handleLogin(event) {
-            event.preventDefault();
-            var enteredUsername = document.getElementById("username").value.trim();
-            var enteredPassword = document.getElementById("password").value.trim();
-
-            // Retrieve stored credentials
-            var storedUsername = localStorage.getItem("username");
-            var storedPassword = localStorage.getItem("password");
-
-            if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
-                document.querySelector('form').style.display = 'none';
-                document.getElementById("success-message").textContent = "Login Successful!";
-                document.getElementById("success-message").style.display = 'block';
-
-                setTimeout(() => {
-                    window.location.href = "mode.html"; // Redirect to mode selection page
-                }, 2000);
-            } else {
-                document.getElementById("result").textContent = "Invalid Username or Password";
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="header">
         <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
         <h3 style="color: white;">LOGIN</h3>
-
     </div>
     <form onsubmit="handleLogin(event)">
         <table>
@@ -116,6 +87,22 @@
         </table>
     </form>
     <p id="result"></p>
-    <p id="success-message"></p>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            let userName = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            db.collection("users").where("name", "==", userName).where("password", "==", password).get()
+                .then(querySnapshot => {
+                    if (!querySnapshot.empty) {
+                        window.location.href = "mode.html"; 
+                    } else {
+                        document.getElementById("result").textContent = "Invalid Username or Password";
+                    }
+                });
+        }
+    </script>
 </body>
 </html>
