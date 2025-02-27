@@ -1,41 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream and Do</title>
+    <title>Register</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            height: 100vh;
-            width: 100vw;
-            background-color: teal;
-            overflow: hidden;
+            margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-        a {
-            display: block;
-            width: 100vw;
+            font-family: Arial, sans-serif;
+            background-color: teal;
             height: 100vh;
         }
-        img {
-            max-width: 100vw;
-            max-height: 100vh;
-            object-fit: contain;
+        .header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+        input[type="text"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: teal;
+            color: white;
+            border: none;
             cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #006d6d;
+        }
+        #result {
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        #success-message {
+            display: none;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
+    <script type="text/javascript">
+        function checkPassword(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("p1").value;
+            var confirmPassword = document.getElementById("p2").value;
+
+            if (password !== confirmPassword) {
+                document.getElementById("result").textContent = "Passwords do not match!";
+                return;
+            }
+
+            // Store credentials in localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            // Hide form and show success message
+            document.querySelector('form').style.display = 'none';
+            document.getElementById("success-message").textContent = "Registration Successful!";
+            document.getElementById("success-message").style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = "login.html"; // Redirect to login page
+            }, 2000);
+        }
+    </script>
 </head>
 <body>
-    <a href="register.html">
-        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" 
-             alt="Dream and Do Logo">
-    </a>
+
+    <!-- Registration Page Section -->
+    <div class="header">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Plogo image">
+        <h3 style="color: white;">REGISTER</h3>
+        <p style="color: white;">Signup/Register</p>
+    </div>
+    
+    <form onsubmit="checkPassword(event)">
+        <table border="0">
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <td>Enter Password:</td>
+                <td><input type="password" id="p1" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" id="p2" name="confirm_password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <input type="radio" name="gender" value="male" required> Male
+                    <input type="radio" name="gender" value="female" required> Female
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Register">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+<!--     <p id="result"></p> -->
+    <p id="success-message"></p>
+
 </body>
 </html>
