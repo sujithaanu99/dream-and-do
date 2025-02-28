@@ -27,7 +27,6 @@
         }
         
         .header {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
             font-size: 40px;
             font-weight: bold;
             margin-top: 20px;
@@ -38,10 +37,7 @@
         .mode-buttons {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             gap: 20px;
-            flex-grow: 1;
         }
         
         .mode-button {
@@ -53,7 +49,6 @@
             font-size: 20px;
             cursor: pointer;
             width: 200px;
-            text-align: center;
         }
         
     </style>
@@ -61,38 +56,8 @@
 <body>
     <div class="header">Mode Selection</div>
     <div class="mode-buttons">
-        <button class="mode-button" id="online-button" onclick="window.location.href='online.html'">🌐 Online</button>
-        <button class="mode-button" id="offline-button" onclick="window.location.href='offline.html'">🏫 Offline</button>
+        <button class="mode-button" onclick="window.location.href='online.html'">🌐 Online</button>
+        <button class="mode-button" onclick="window.location.href='offline.html'">🏫 Offline</button>
     </div>
-    
-    <script>
-        let onlineButton = document.getElementById("online-button");
-        let offlineButton = document.getElementById("offline-button");
-        let hoverTimer;
-        
-        function setBackground(image) {
-            document.body.style.background = `url('${image}') center/cover no-repeat`;
-        }
-        
-        function resetBackground() {
-            document.body.style.background = "teal";
-        }
-        
-        onlineButton.addEventListener("mouseenter", () => {
-            hoverTimer = setTimeout(() => setBackground('online.png'), 1000);
-        });
-        onlineButton.addEventListener("mouseleave", () => {
-            clearTimeout(hoverTimer);
-            resetBackground();
-        });
-        
-        offlineButton.addEventListener("mouseenter", () => {
-            hoverTimer = setTimeout(() => setBackground('offline.webp'), 1000);
-        });
-        offlineButton.addEventListener("mouseleave", () => {
-            clearTimeout(hoverTimer);
-            resetBackground();
-        });
-    </script>
 </body>
 </html>
