@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Workshops Across India</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #008080;
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .workshops {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .workshop {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            font-size: 22px;
+            color: black;
+        }
+        .workshop:hover {
+            transform: scale(1.2);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #workshop-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="workshops" id="workshops-container">
+            <div class="workshop" onclick="loadWorkshop('hatha_yoga.html')">🧘‍♂️ Hatha Yoga (4.8⭐, 220 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('vinyasa_yoga.html')">🧘‍♀️ Vinyasa Yoga (4.7⭐, 180 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('power_yoga.html')">💪 Power Yoga (4.9⭐, 210 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('kundalini_yoga.html')">🔮 Kundalini Yoga (4.6⭐, 150 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('ashtanga_yoga.html')">🧘‍♂️ Ashtanga Yoga (5.0⭐, 300 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('aerial_yoga.html')">🎪 Aerial Yoga (4.8⭐, 170 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('yin_yoga.html')">🧘‍♀️ Yin Yoga (4.7⭐, 130 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('restorative_yoga.html')">🌿 Restorative Yoga (4.5⭐, 100 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('prenatal_yoga.html')">🤰 Prenatal Yoga (4.6⭐, 90 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('yoga_for_seniors.html')">🧓 Yoga for Seniors (4.8⭐, 160 Ratings)</div>
+        </div>
+        <iframe id="workshop-frame"></iframe>
+    </main>
+
+    <script>
+        function loadWorkshop(workshopPage) {
+            document.getElementById('workshops-container').style.display = 'none';
+            let frame = document.getElementById('workshop-frame');
+            frame.src = workshopPage;
+            frame.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
