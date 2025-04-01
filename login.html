@@ -109,10 +109,7 @@
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
-                    resultElement.textContent = "";
-                    document.querySelector("form").style.display = "none";
-                    document.getElementById("success-message").textContent = "Login Successful! Redirecting...";
-                    document.getElementById("success-message").style.display = "block";
+                    resultElement.textContent = "Login Successful! Redirecting...";
                     setTimeout(() => window.location.href = "mode.html", 2000);
                 } else {
                     resultElement.textContent = "Invalid Username or Password";
@@ -168,6 +165,5 @@
         </table>
     </form>
     <p id="result"></p>
-    <p id="success-message"></p>
 </body>
 </html>
