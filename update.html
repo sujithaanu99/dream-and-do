@@ -1,7 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Update</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+        import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+            authDomain: "dreamanddo-b78e6.firebaseapp.com",
+            projectId: "dreamanddo-b78e6",
+            storageBucket: "dreamanddo-b78e6.appspot.com",
+            messagingSenderId: "52287172119",
+            appId: "1:52287172119:web:6227752526f43d2ccb7652",
+            measurementId: "G-15WBNVGWTR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const userId = "sampleUserId"; // Replace with actual user ID (e.g., from authentication)
+
+        async function showUpdateForm() {
+            const selectedField = document.getElementById("fieldSelect").value;
+            const formContainer = document.getElementById("form-container");
+            const fieldLabel = document.getElementById("field-label");
+            const fieldInput = document.getElementById("field-input");
+            const result = document.getElementById("result");
+
+            result.textContent = "";
+            if (selectedField) {
+                formContainer.style.display = "block";
+                fieldLabel.textContent = `Enter new ${selectedField}:`;
+                fieldInput.placeholder = `New ${selectedField}`;
+                fieldInput.type = selectedField === "password" ? "password" : "text";
+            } else {
+                formContainer.style.display = "none";
+            }
+        }
+
+        async function updateProfile(event) {
+            event.preventDefault();
+            const selectedField = document.getElementById("fieldSelect").value;
+            const newValue = document.getElementById("field-input").value;
+            const result = document.getElementById("result");
+
+            if (!newValue.trim()) {
+                result.textContent = "Please enter a valid value.";
+                result.style.color = "red";
+                return;
+            }
+
+            try {
+                const userRef = doc(db, "users", userId);
+                await updateDoc(userRef, { [selectedField]: newValue });
+                result.textContent = `${selectedField.charAt(0).toUpperCase() + selectedField.slice(1)} updated successfully to "${newValue}".`;
+                result.style.color = "green";
+                document.getElementById("field-input").value = "";
+                setTimeout(() => {
+                    window.location.href = "login.html"; // Redirect to login page
+                }, 2000);
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                result.textContent = "Profile update failed.";
+                result.style.color = "red";
+            }
+        }
+    </script>
     <style>
         body {
             height: 100%;
@@ -42,7 +108,7 @@
             text-align: left;
             width: 100%;
         }
-        input[type="text"], input[type="password"], input[type="email"] {
+        input {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -68,45 +134,6 @@
             color: green;
         }
     </style>
-    <script>
-        function showUpdateForm() {
-            const selectedField = document.getElementById("fieldSelect").value;
-            const formContainer = document.getElementById("form-container");
-            const fieldLabel = document.getElementById("field-label");
-            const fieldInput = document.getElementById("field-input");
-            const result = document.getElementById("result");
-
-            result.textContent = ""; // Clear previous result
-            if (selectedField) {
-                formContainer.style.display = "block";
-                fieldLabel.textContent = `Enter new ${selectedField}:`;
-                fieldInput.placeholder = `New ${selectedField}`;
-                fieldInput.type = selectedField === "password" ? "password" : "text";
-            } else {
-                formContainer.style.display = "none";
-            }
-        }
-
-        function updateProfile(event) {
-            event.preventDefault();
-            const selectedField = document.getElementById("fieldSelect").value;
-            const newValue = document.getElementById("field-input").value;
-            const result = document.getElementById("result");
-
-            if (!newValue.trim()) {
-                result.textContent = "Please enter a valid value.";
-                result.style.color = "red";
-                return;
-            }
-
-            // Simulate a successful profile update
-            result.textContent = `${selectedField.charAt(0).toUpperCase() + selectedField.slice(1)} updated successfully to "${newValue}".`;
-            result.style.color = "green";
-
-            // Reset form
-            document.getElementById("field-input").value = "";
-        }
-    </script>
 </head>
 <body>
     <div class="container">
