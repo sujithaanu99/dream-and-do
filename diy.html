@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY and Woodworking Workshops Across India</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #008080;
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .workshops {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .workshop {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            font-size: 22px;
+            color: black;
+        }
+        .workshop:hover {
+            transform: scale(1.2);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #workshop-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="workshops" id="workshops-container">
+            <div class="workshop" onclick="loadWorkshop('wood_crafting.html')">🪵 Wood Crafting Basics (4.8⭐, 130 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('diy_projects.html')">🔨 DIY Projects for Beginners (4.7⭐, 110 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('home_improvement.html')">🏠 Home Improvement (4.6⭐, 150 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('furniture_making.html')">🪑 Furniture Making Workshop (5.0⭐, 100 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('woodturning.html')">🔪 Woodturning Basics (4.5⭐, 80 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('wood_sculpture.html')">🪓 Wood Sculpture Workshop (4.9⭐, 90 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('upcycling_wood.html')">♻️ Upcycling Wood Projects (4.4⭐, 60 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('tool_training.html')">🔧 Tool Training for Woodworking (4.6⭐, 70 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('garden_projects.html')">🌿 Garden DIY Projects (4.7⭐, 120 Ratings)</div>
+            <div class="workshop" onclick="loadWorkshop('advanced_woodwork.html')">⚒️ Advanced Woodworking Techniques (5.0⭐, 150 Ratings)</div>
+        </div>
+        <iframe id="workshop-frame"></iframe>
+    </main>
+
+    <script>
+        function loadWorkshop(workshopPage) {
+            document.getElementById('workshops-container').style.display = 'none';
+            let frame = document.getElementById('workshop-frame');
+            frame.src = workshopPage;
+            frame.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
