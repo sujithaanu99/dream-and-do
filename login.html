@@ -109,8 +109,9 @@
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
+                    resultElement.textContent = "";
                     document.querySelector("form").style.display = "none";
-                    document.getElementById("success-message").textContent = "Login Successful!";
+                    document.getElementById("success-message").textContent = "Login Successful! Redirecting...";
                     document.getElementById("success-message").style.display = "block";
                     setTimeout(() => window.location.href = "mode.html", 2000);
                 } else {
@@ -130,10 +131,10 @@
 
             if (passwordField.type === "password") {
                 passwordField.type = "text";
-                eyeIcon.textContent = "🫣"; // Eye open emoji
+                eyeIcon.textContent = "🫣";
             } else {
                 passwordField.type = "password";
-                eyeIcon.textContent = "🙈"; // Eye closed emoji
+                eyeIcon.textContent = "🙈";
             }
         }
     </script>
