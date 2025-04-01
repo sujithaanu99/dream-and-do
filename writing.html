@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutes for Writing Skills in Visakhapatnam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #008080;
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .institutes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .institute {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            font-size: 22px;
+            color: black;
+        }
+        .institute:hover {
+            transform: scale(1.2);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #institute-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>Institutes for Writing Skills in Visakhapatnam</header>
+    <main>
+        <div class="institutes" id="institutes-container">
+            <div class="institute" onclick="loadInstitute('calligraphy_institute.html')">✍️ Calligraphy Institute Of Writing (5.0⭐, 2 Ratings)</div>
+            <div class="institute" onclick="loadInstitute('new_thoughts.html')">💻 New Thoughts IT Solutions (4.6⭐, 64 Ratings)</div>
+            <div class="institute" onclick="loadInstitute('bsr_fire_safety.html')">🔥 BSR Institute Of Fire & Safety Engineering (4.7⭐, 342 Ratings)</div>
+            <div class="institute" onclick="loadInstitute('data_pro.html')">🖥️ Data Pro Computers (4.4⭐, 179 Ratings)</div>
+            <div class="institute" onclick="loadInstitute('target_academy.html')">📚 Target Academy For CA CMA ACCA (2.8⭐, 2 Ratings)</div>
+        </div>
+        <iframe id="institute-frame"></iframe>
+    </main>
+    <script>
+        function loadInstitute(institutePage) {
+            document.getElementById('institutes-container').style.display = 'none';
+            let frame = document.getElementById('institute-frame');
+            frame.src = institutePage;
+            frame.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
