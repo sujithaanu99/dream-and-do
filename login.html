@@ -1,99 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: teal;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        table {
-            width: 100%;
-        }
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
-        .password-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .password-container input {
-            width: 100%;
-            padding-right: 40px;
-        }
-        .password-container .eye-icon {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-        }
-        input[type="text"], input[type="password"], input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: teal;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        input[type="submit"]:hover {
-            background-color: #006d6d;
-        }
-        #result {
-            text-align: center;
-            color: white;
-            font-weight: bold;
-        }
-        #success-message {
-            display: none;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dream and Do</title>
+
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
+        // Firebase Configuration
         const firebaseConfig = {
-            /* Your Firebase Config */
+            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+            authDomain: "dreamanddo-b78e6.firebaseapp.com",
+            projectId: "dreamanddo-b78e6",
+            storageBucket: "dreamanddo-b78e6.appspot.com",
+            messagingSenderId: "52287172119",
+            appId: "1:52287172119:web:6227752526f43d2ccb7652",
+            measurementId: "G-15WBNVGWTR"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Login function
         async function handleLogin(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent page reload
+
             let username = document.getElementById("username").value.trim();
             let password = document.getElementById("password").value.trim();
             let resultElement = document.getElementById("result");
@@ -109,18 +44,94 @@
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
-                    resultElement.textContent = "Login Successful! Redirecting...";
-                    setTimeout(() => window.location.href = "mode.html", 2000);
+                    document.querySelector("form").style.display = "none";
+                    document.getElementById("success-message").textContent = "Login Successful!";
+                    document.getElementById("success-message").style.display = "block";
+
+                    setTimeout(() => {
+                        console.log("Redirecting to mode.html...");
+                        window.location.href = "mode.html";
+                    }, 2000);
                 } else {
                     resultElement.textContent = "Invalid Username or Password";
                 }
             } catch (error) {
                 console.error("Error fetching user:", error);
-                resultElement.textContent = "Error logging in.";
+                resultElement.textContent = "Error logging in. Please try again.";
             }
         }
+
         window.handleLogin = handleLogin;
     </script>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .logo img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #006d6d;
+        }
+        #result, #success-message {
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #success-message {
+            display: none;
+        }
+    </style>
+
     <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
@@ -128,42 +139,36 @@
 
             if (passwordField.type === "password") {
                 passwordField.type = "text";
-                eyeIcon.textContent = "🫣";
+                eyeIcon.textContent = "😃"; 
             } else {
                 passwordField.type = "password";
-                eyeIcon.textContent = "🙈";
+                eyeIcon.textContent = "🤫";
             }
         }
     </script>
+
 </head>
 <body>
-    <div class="header">
-        <img src="plogo.jpg" alt="Logo Image">
-        <h3 style="color: white;">LOGIN</h3>
-        <p style="color: white;">Enter your credentials</p>
+
+    <div class="logo">
+        <img src="https://github.com/sujithaanu99/dream-and-do/blob/main/plogo.jpg?raw=true" alt="Dream and Do Logo">
     </div>
+
+    <h2 style="color: white;">LOGIN</h2>
+
     <form onsubmit="handleLogin(event)">
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" id="username" name="username" maxlength="30" required></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td>
-                    <div class="password-container">
-                        <input type="password" id="password" name="password" maxlength="10" required>
-                        <span id="eye-icon" class="eye-icon" onclick="togglePassword()">🫣</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Login">
-                </td>
-            </tr>
-        </table>
+        <input type="text" id="username" placeholder="Enter your username" required>
+
+        <div class="input-container">
+            <input type="password" id="password" placeholder="Enter password" required>
+            <span class="eye-icon" id="eye-icon" onclick="togglePassword()">👁️</span>
+        </div>
+
+        <button type="submit">Login</button>
     </form>
+
     <p id="result"></p>
+    <p id="success-message"></p>
+
 </body>
 </html>
