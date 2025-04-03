@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Update</title>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
@@ -20,57 +22,68 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const userId = "sampleUserId"; // Replace with actual user ID (e.g., from authentication)
+        const auth = getAuth();
 
-        async function showUpdateForm() {
-            const selectedField = document.getElementById("fieldSelect").value;
-            const formContainer = document.getElementById("form-container");
-            const fieldLabel = document.getElementById("field-label");
-            const fieldInput = document.getElementById("field-input");
-            const result = document.getElementById("result");
+        let currentUserId = null;
 
-            result.textContent = "";
-            if (selectedField) {
-                formContainer.style.display = "block";
-                fieldLabel.textContent = `Enter new ${selectedField}:`;
-                fieldInput.placeholder = `New ${selectedField}`;
-                fieldInput.type = selectedField === "password" ? "password" : "text";
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                await loadUserData();
             } else {
-                formContainer.style.display = "none";
+                window.location.href = "login.html";
+            }
+        });
+
+        async function loadUserData() {
+            if (!currentUserId) return;
+            const userRef = doc(db, "users", currentUserId);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+                document.getElementById("name").value = userSnap.data().name || "";
+                document.getElementById("email").value = userSnap.data().email || "";
             }
         }
 
         async function updateProfile(event) {
             event.preventDefault();
-            const selectedField = document.getElementById("fieldSelect").value;
-            const newValue = document.getElementById("field-input").value;
+            if (!currentUserId) return;
+
+            const newName = document.getElementById("name").value.trim();
+            const newEmail = document.getElementById("email").value.trim();
+            const newPassword = document.getElementById("password").value.trim();
             const result = document.getElementById("result");
 
-            if (!newValue.trim()) {
-                result.textContent = "Please enter a valid value.";
+            let updateData = {};
+            if (newName) updateData.name = newName;
+            if (newEmail) updateData.email = newEmail;
+            if (newPassword) updateData.password = newPassword;
+
+            if (Object.keys(updateData).length === 0) {
+                result.textContent = "Please enter values to update.";
                 result.style.color = "red";
                 return;
             }
 
             try {
-                const userRef = doc(db, "users", userId);
-                await updateDoc(userRef, { [selectedField]: newValue });
-                result.textContent = `${selectedField.charAt(0).toUpperCase() + selectedField.slice(1)} updated successfully to "${newValue}".`;
+                const userRef = doc(db, "users", currentUserId);
+                await updateDoc(userRef, updateData);
+                result.textContent = "Profile updated successfully!";
                 result.style.color = "green";
-                document.getElementById("field-input").value = "";
                 setTimeout(() => {
-                    window.location.href = "login.html"; // Redirect to login page
+                    window.location.href = "login.html";
                 }, 2000);
             } catch (error) {
-                console.error("Error updating profile:", error);
-                result.textContent = "Profile update failed.";
+                result.textContent = "Profile update failed: " + error.message;
                 result.style.color = "red";
             }
         }
     </script>
+
     <style>
         body {
-            height: 100%;
+            height: 100vh;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -90,65 +103,46 @@
             max-width: 400px;
             width: 100%;
         }
-        select {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .form-container {
-            margin-top: 20px;
-            display: none;
-        }
-        .form-container label, input {
-            display: block;
-            margin-bottom: 10px;
-            text-align: left;
-            width: 100%;
-        }
         input {
+            width: 100%;
             padding: 10px;
+            margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: 100%;
             box-sizing: border-box;
         }
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
             background-color: teal;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 16px;
         }
         button:hover {
             background-color: #006d6d;
         }
         #result {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 16px;
-            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Profile Update</h2>
-        <p>Select a field to update:</p>
-        <select id="fieldSelect" onchange="showUpdateForm()">
-            <option value="">-- Select Field --</option>
-            <option value="name">Name</option>
-            <option value="email">Email</option>
-            <option value="password">Password</option>
-        </select>
-        <form id="form-container" class="form-container" onsubmit="updateProfile(event)">
-            <label id="field-label"></label>
-            <input id="field-input" type="text" required>
-            <button type="submit">Update</button>
+        <form onsubmit="updateProfile(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter new name">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter new email">
+            <label for="password">New Password:</label>
+            <input type="password" id="password" placeholder="Enter new password">
+            <button type="submit">Update Profile</button>
         </form>
         <p id="result"></p>
     </div>
