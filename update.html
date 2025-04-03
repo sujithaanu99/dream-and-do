@@ -8,7 +8,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+        import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
@@ -24,58 +24,53 @@
         const db = getFirestore(app);
         const auth = getAuth();
 
-        let currentUserId = null;
+        let currentUser = null;
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentUserId = user.uid;
+                currentUser = user;
                 await loadUserData();
             } else {
+                console.error("No user logged in.");
                 window.location.href = "login.html";
             }
         });
 
         async function loadUserData() {
-            if (!currentUserId) return;
-            const userRef = doc(db, "users", currentUserId);
+            if (!currentUser) return;
+            const userRef = doc(db, "users", currentUser.uid);
             const userSnap = await getDoc(userRef);
 
             if (userSnap.exists()) {
                 document.getElementById("name").value = userSnap.data().name || "";
-                document.getElementById("email").value = userSnap.data().email || "";
+                document.getElementById("email").value = currentUser.email || "";
             }
         }
 
         async function updateProfile(event) {
             event.preventDefault();
-            if (!currentUserId) return;
+            if (!currentUser) return;
 
             const newName = document.getElementById("name").value.trim();
             const newEmail = document.getElementById("email").value.trim();
             const newPassword = document.getElementById("password").value.trim();
             const result = document.getElementById("result");
 
-            let updateData = {};
-            if (newName) updateData.name = newName;
-            if (newEmail) updateData.email = newEmail;
-            if (newPassword) updateData.password = newPassword;
-
-            if (Object.keys(updateData).length === 0) {
-                result.textContent = "Please enter values to update.";
-                result.style.color = "red";
-                return;
-            }
-
             try {
-                const userRef = doc(db, "users", currentUserId);
-                await updateDoc(userRef, updateData);
+                if (newName) {
+                    await updateDoc(doc(db, "users", currentUser.uid), { name: newName });
+                }
+                if (newEmail && newEmail !== currentUser.email) {
+                    await updateEmail(currentUser, newEmail);
+                }
+                if (newPassword) {
+                    await updatePassword(currentUser, newPassword);
+                }
+
                 result.textContent = "Profile updated successfully!";
                 result.style.color = "green";
-                setTimeout(() => {
-                    window.location.href = "login.html";
-                }, 2000);
             } catch (error) {
-                result.textContent = "Profile update failed: " + error.message;
+                result.textContent = "Error: " + error.message;
                 result.style.color = "red";
             }
         }
