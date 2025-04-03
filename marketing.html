@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing Courses in Visakhapatnam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #008080;
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .institutes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .institute {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            font-size: 22px;
+            color: black;
+        }
+        .institute:hover {
+            transform: scale(1.2);
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #institute-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>Digital Marketing Courses in Visakhapatnam</header>
+    <main>
+        <div class="institutes" id="institutes-container">
+            <div class="institute" onclick="loadInstitute('nict_computer.html')">💻 Nict Computer Education (4.8⭐, 402 Ratings) - Dwaraka Nagar</div>
+            <div class="institute" onclick="loadInstitute('full_stack_world.html')">🌍 Full Stack World (4.8⭐, 61 Ratings) - Pithapuram Colony</div>
+            <div class="institute" onclick="loadInstitute('millennium_software.html')">🖥️ Millennium Software Solutions Pvt Ltd (4.3⭐, 788 Ratings) - Dwaraka Nagar</div>
+            <div class="institute" onclick="loadInstitute('teks_academy.html')">📚 Teks Academy (4.8⭐, 86 Ratings) - Dwaraka Nagar</div>
+            <div class="institute" onclick="loadInstitute('aim_software.html')">🚀 Aim Software Technologies (4.8⭐, 34 Ratings) - Dwaraka Nagar</div>
+        </div>
+        <iframe id="institute-frame"></iframe>
+    </main>
+    <script>
+        function loadInstitute(institutePage) {
+            document.getElementById('institutes-container').style.display = 'none';
+            let frame = document.getElementById('institute-frame');
+            frame.src = institutePage;
+            frame.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
