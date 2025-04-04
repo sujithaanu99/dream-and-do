@@ -1,1 +1,216 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Profile</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #f8f8f8;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: teal;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #007b7b;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .gender-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .gender-container label {
+      flex: 1;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Update Profile</h2>
+    <form id="profileForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" placeholder="Enter name"/>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter email"/>
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" placeholder="Enter address"/>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" placeholder="Enter age" min="1"/>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob"/>
+
+      <label>Gender:</label>
+      <div class="gender-container">
+        <label><input type="radio" name="gender" value="male"> Male</label>
+        <label><input type="radio" name="gender" value="female"> Female</label>
+      </div>
+
+      <label for="password">New Password:</label>
+      <input type="password" id="password" placeholder="Enter new password"/>
+
+      <button type="submit">Update Profile</button>
+    </form>
+    <p id="result"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+    import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+      authDomain: "dreamanddo-b78e6.firebaseapp.com",
+      projectId: "dreamanddo-b78e6",
+      storageBucket: "dreamanddo-b78e6.appspot.com",
+      messagingSenderId: "52287172119",
+      appId: "1:52287172119:web:6227752526f43d2ccb7652",
+      measurementId: "G-15WBNVGWTR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    let currentUser = null;
+
+    const form = document.getElementById("profileForm");
+    const result = document.getElementById("result");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const addressInput = document.getElementById("address");
+    const ageInput = document.getElementById("age");
+    const dobInput = document.getElementById("dob");
+    const passwordInput = document.getElementById("password");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          nameInput.value = data.name || "";
+          emailInput.value = user.email || "";
+          addressInput.value = data.address || "";
+          ageInput.value = data.age || "";
+          dobInput.value = data.dob || "";
+
+          if (data.gender) {
+            const genderRadio = document.querySelector(`input[name="gender"][value="${data.gender}"]`);
+            if (genderRadio) genderRadio.checked = true;
+          }
+        }
+      } else {
+        result.textContent = "⚠️ You are not logged in.";
+        result.style.color = "red";
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const address = addressInput.value.trim();
+      const age = ageInput.value.trim();
+      const dob = dobInput.value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+      const password = passwordInput.value;
+
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userDocRef, {
+          name, address, age: Number(age), dob, gender
+        });
+
+        if (email && email !== currentUser.email) {
+          await updateEmail(currentUser, email);
+        }
+
+        if (password) {
+          await updatePassword(currentUser, password);
+        }
+
+        result.textContent = "✅ Profile updated successfully!";
+        result.style.color = "green";
+      } catch (error) {
+        result.textContent = "❌ Error: " + error.message;
+        result.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
