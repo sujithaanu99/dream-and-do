@@ -3,12 +3,6 @@
 <head>
     <title>Mode Selection</title>
     <style>
-        @keyframes bgAnimation {
-            0% { background-color: teal; }
-            50% { background-color: #008B8B; }
-            100% { background-color: teal; }
-        }
-
         @keyframes chatbotEntrance {
             0% {
                 transform: translateY(100px) scale(0.8);
@@ -29,13 +23,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: teal;
-            animation: bgAnimation 5s infinite alternate;
+            background: url('modedream.jpg') no-repeat center center fixed;
+            background-size: cover;
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
-            background-size: cover;
-            background-position: center;
             transition: background 1.5s ease-in-out;
         }
 
@@ -64,7 +56,7 @@
             width: 200px;
         }
 
-        /* 👤 Profile Button Styles */
+        /* Profile Button */
         .profile-button {
             position: absolute;
             top: 20px;
@@ -76,7 +68,6 @@
             font-size: 16px;
             border-radius: 10px;
             cursor: pointer;
-            z-index: 999;
         }
 
         .profile-button:hover {
@@ -121,35 +112,12 @@
             gap: 8px;
         }
 
-        .message {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            max-width: 90%;
-        }
-
-        .message.bot {
-            flex-direction: row;
-        }
-
-        .message.you {
-            flex-direction: row;
-            align-items: flex-start;
-            margin-left: 32px;
-        }
-
         .message-text {
             background: white;
             padding: 10px 14px;
             border-radius: 15px;
             max-width: 80%;
             position: relative;
-        }
-
-        .bot-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
         }
 
         .chatbot-input {
@@ -175,7 +143,7 @@
     </style>
 </head>
 <body>
-    <!-- 👤 Profile Button (Top Right) -->
+    <!-- Profile Button -->
     <button class="profile-button" onclick="window.location.href='update.html'">👤 Profile</button>
 
     <!-- Header and Mode Buttons -->
@@ -200,7 +168,6 @@
         </div>
     </div>
 
-    <!-- Chatbot Script -->
     <script>
         const messages = document.getElementById("chatMessages");
         const input = document.getElementById("chatInput");
@@ -226,7 +193,6 @@
             "wellness": "wellness.html"
         };
 
-        // First message typing animation
         const firstMessage = "Hey there! Do you prefer online or offline learning? 😊";
         let i = 0;
         const typingFirst = document.getElementById("typingFirst");
@@ -246,26 +212,14 @@
             if (sender === "bot") {
                 message.innerHTML = `
                     <img src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png" class="bot-avatar" alt="bot">
-                    <div class="message-text" id="typing-${Date.now()}">...</div>
+                    <div class="message-text">${text}</div>
                 `;
-                messages.appendChild(message);
-                messages.scrollTop = messages.scrollHeight;
-
-                const typingEl = message.querySelector(".message-text");
-                let j = 0;
-                const type = () => {
-                    if (j < text.length) {
-                        typingEl.innerHTML = text.substring(0, j + 1);
-                        j++;
-                        setTimeout(type, 25);
-                    }
-                };
-                setTimeout(type, 300);
             } else {
                 message.innerHTML = `<div class="message-text">${text}</div>`;
-                messages.appendChild(message);
-                messages.scrollTop = messages.scrollHeight;
             }
+
+            messages.appendChild(message);
+            messages.scrollTop = messages.scrollHeight;
         }
 
         function sendMessage() {
@@ -292,17 +246,13 @@
                 const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
 
                 if (matchedKey) {
-                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
-                    stage = 2;
-                    sessionStorage.setItem("nextPage", options[matchedKey]);
+                    addMessage("bot", `Cool choice! Redirecting to ${matchedKey}... 🚀`);
+                    setTimeout(() => {
+                        window.location.href = options[matchedKey];
+                    }, 1500);
                 } else {
                     addMessage("bot", "Hmm, I didn’t catch that. Can you choose one from the list?");
                 }
-            } else if (stage === 2) {
-                addMessage("bot", "That’s awesome! Redirecting you now... 🚀");
-                setTimeout(() => {
-                    window.location.href = sessionStorage.getItem("nextPage");
-                }, 1500);
             }
         }
 
