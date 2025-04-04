@@ -1,85 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Workshops Across India</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            background: #008080;
-            margin: 0;
-            padding: 0;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        header {
-            color: white;
-            padding: 20px;
-            font-size: 48px;
-            font-weight: bold;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-        .workshops {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .workshop {
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-            position: relative;
-            font-size: 22px;
-            color: black;
-        }
-        .workshop:hover {
-            transform: scale(1.2);
-            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        #workshop-frame {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Workshops Across India</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #008080;
+      margin: 0;
+      padding: 0;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: white;
+      color: #008080;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      z-index: 1000;
+      display: none;
+    }
+
+    .back-button:hover {
+      background-color: #f0f0f0;
+    }
+
+    header {
+      color: white;
+      padding: 20px;
+      font-size: 42px;
+      font-weight: bold;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+    }
+
+    .workshops {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin: 20px;
+      overflow-y: auto;
+      padding-bottom: 30px;
+    }
+
+    .workshop {
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      font-size: 20px;
+      color: black;
+      width: 320px;
+      text-align: center;
+    }
+
+    .workshop:hover {
+      transform: scale(1.1);
+      box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-    <main>
-        <div class="workshops" id="workshops-container">
-            <div class="workshop" onclick="loadWorkshop('guitar_lessons.html')">🎸 Guitar Masterclass (4.9⭐, 200 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('vocal_training.html')">🎤 Vocal Training Academy (4.7⭐, 150 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('tabla_lessons.html')">🪘 Tabla Lessons (4.6⭐, 120 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('sitar_workshop.html')">🎻 Sitar Workshop (5.0⭐, 70 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('music_production.html')">🎚️ Music Production (4.8⭐, 180 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('piano_classes.html')">🎹 Piano Classes (4.5⭐, 110 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('flute_workshop.html')">🎶 Flute Masterclass (4.3⭐, 95 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('drum_classes.html')">🥁 Drum Classes (4.4⭐, 85 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('violin_workshop.html')">🎻 Violin Workshop (4.8⭐, 75 Ratings)</div>
-            <div class="workshop" onclick="loadWorkshop('music_theory.html')">🎼 Music Theory Course (4.6⭐, 60 Ratings)</div>
-        </div>
-        <iframe id="workshop-frame"></iframe>
-    </main>
+  <!-- Back Button -->
+  <button class="back-button" onclick="goBack()">← Back</button>
 
-    <script>
-        function loadWorkshop(workshopPage) {
-            document.getElementById('workshops-container').style.display = 'none';
-            let frame = document.getElementById('workshop-frame');
-            frame.src = workshopPage;
-            frame.style.display = 'block';
-        }
-    </script>
+  <header>Music Workshops Across India</header>
+
+  <main>
+    <div class="workshops" id="workshops-container">
+      <div class="workshop" onclick="loadWorkshop('guitar_lessons.html')">🎸 Guitar Masterclass (4.9⭐, 200 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('vocal_training.html')">🎤 Vocal Training Academy (4.7⭐, 150 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('tabla_lessons.html')">🪘 Tabla Lessons (4.6⭐, 120 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('sitar_workshop.html')">🎻 Sitar Workshop (5.0⭐, 70 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('music_production.html')">🎚️ Music Production (4.8⭐, 180 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('piano_classes.html')">🎹 Piano Classes (4.5⭐, 110 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('flute_workshop.html')">🎶 Flute Masterclass (4.3⭐, 95 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('drum_classes.html')">🥁 Drum Classes (4.4⭐, 85 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('violin_workshop.html')">🎻 Violin Workshop (4.8⭐, 75 Ratings)</div>
+      <div class="workshop" onclick="loadWorkshop('music_theory.html')">🎼 Music Theory Course (4.6⭐, 60 Ratings)</div>
+    </div>
+
+    <iframe id="workshop-frame"></iframe>
+  </main>
+
+  <script>
+    function loadWorkshop(workshopPage) {
+      document.getElementById('workshops-container').style.display = 'none';
+      document.querySelector('header').style.display = 'none';
+      document.querySelector('.back-button').style.display = 'block';
+
+      const frame = document.getElementById('workshop-frame');
+      frame.src = workshopPage;
+      frame.style.display = 'block';
+    }
+
+    function goBack() {
+      const frame = document.getElementById('workshop-frame');
+      frame.src = "";
+      frame.style.display = 'none';
+      document.getElementById('workshops-container').style.display = 'flex';
+      document.querySelector('header').style.display = 'block';
+      document.querySelector('.back-button').style.display = 'none';
+
+      // Optional redirect to offline.html
+      // window.location.href = 'offline.html';
+    }
+
+    window.onload = () => {
+      document.querySelector('.back-button').style.display = 'none';
+    };
+  </script>
 </body>
 </html>
