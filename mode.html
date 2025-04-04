@@ -9,6 +9,19 @@
             100% { background-color: teal; }
         }
 
+        @keyframes chatbotEntrance {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+                box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            }
+        }
+
         body {
             height: 100vh;
             margin: 0;
@@ -56,8 +69,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 300px;
-            background: white;
+            width: 320px;
+            background: #f0f0f0;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             color: black;
@@ -65,6 +78,9 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(100px);
+            animation: chatbotEntrance 1s ease-out forwards;
         }
 
         .chatbot-header {
@@ -79,7 +95,41 @@
             flex: 1;
             padding: 10px;
             overflow-y: auto;
-            max-height: 200px;
+            max-height: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 90%;
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.you {
+            flex-direction: row;
+            align-items: flex-start;
+            margin-left: 32px;
+        }
+
+        .message-text {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 15px;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
         }
 
         .chatbot-input {
@@ -92,6 +142,7 @@
             padding: 10px;
             border: none;
             outline: none;
+            font-size: 14px;
         }
 
         .chatbot-input button {
@@ -112,9 +163,12 @@
 
     <!-- Chatbot -->
     <div class="chatbot-container">
-        <div class="chatbot-header">💬 ChatBot</div>
+        <div class="chatbot-header">🤖 Chat with Me!</div>
         <div class="chatbot-messages" id="chatMessages">
-            <div><strong>Bot:</strong> Hey there! Do you prefer <b>online</b> or <b>offline</b> learning? 😊</div>
+            <div class="message bot">
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png" class="bot-avatar" alt="bot">
+                <div class="message-text" id="typingFirst">...</div>
+            </div>
         </div>
         <div class="chatbot-input">
             <input type="text" id="chatInput" placeholder="Type here...">
@@ -147,45 +201,83 @@
             "wellness": "wellness.html"
         };
 
+        // First message typing animation
+        const firstMessage = "Hey there! Do you prefer online or offline learning? 😊";
+        let i = 0;
+        const typingFirst = document.getElementById("typingFirst");
+        const typeIntro = () => {
+            if (i < firstMessage.length) {
+                typingFirst.innerHTML = firstMessage.substring(0, i + 1);
+                i++;
+                setTimeout(typeIntro, 30);
+            }
+        };
+        typeIntro();
+
+        // Function to type out any bot message
         function addMessage(sender, text) {
-            const div = document.createElement("div");
-            div.innerHTML = `<strong>${sender}:</strong> ${text}`;
-            messages.appendChild(div);
-            messages.scrollTop = messages.scrollHeight;
+            const message = document.createElement("div");
+            message.classList.add("message", sender);
+
+            if (sender === "bot") {
+                message.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png" class="bot-avatar" alt="bot">
+                    <div class="message-text" id="typing-${Date.now()}">...</div>
+                `;
+                messages.appendChild(message);
+                messages.scrollTop = messages.scrollHeight;
+
+                const typingEl = message.querySelector(".message-text");
+                let j = 0;
+                const type = () => {
+                    if (j < text.length) {
+                        typingEl.innerHTML = text.substring(0, j + 1);
+                        j++;
+                        setTimeout(type, 25);
+                    }
+                };
+                setTimeout(type, 300); // Delay typing slightly
+            } else {
+                message.innerHTML = `
+                    <div class="message-text">${text}</div>
+                `;
+                messages.appendChild(message);
+                messages.scrollTop = messages.scrollHeight;
+            }
         }
 
         function sendMessage() {
             const userMsg = input.value.trim().toLowerCase();
             if (userMsg === "") return;
 
-            addMessage("You", userMsg);
+            addMessage("you", userMsg);
             input.value = "";
 
             if (stage === 0) {
                 if (userMsg.includes("online")) {
                     modeSelected = "online";
                     stage = 1;
-                    addMessage("Bot", "Great! Choose one: Coding, Marketing, Graphic Design, Creative Writing, or Online Fitness.");
+                    addMessage("bot", "Great! Choose one: Coding, Marketing, Graphic Design, Creative Writing, or Online Fitness.");
                 } else if (userMsg.includes("offline")) {
                     modeSelected = "offline";
                     stage = 1;
-                    addMessage("Bot", "Awesome! Choose one: Acting, Music, DIY, Woodworking, Painting, Yoga, or Wellness.");
+                    addMessage("bot", "Awesome! Choose one: Acting, Music, DIY, Woodworking, Painting, Yoga, or Wellness.");
                 } else {
-                    addMessage("Bot", "Please type 'online' or 'offline' to get started.");
+                    addMessage("bot", "Please type 'online' or 'offline' to get started.");
                 }
             } else if (stage === 1) {
                 const options = modeSelected === "online" ? onlineOptions : offlineOptions;
                 const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
 
                 if (matchedKey) {
-                    addMessage("Bot", `Cool choice! Just one quick question before we begin — why are you interested in ${matchedKey}?`);
+                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
                     stage = 2;
                     sessionStorage.setItem("nextPage", options[matchedKey]);
                 } else {
-                    addMessage("Bot", "Hmm, I didn’t catch that. Can you choose one from the list?");
+                    addMessage("bot", "Hmm, I didn’t catch that. Can you choose one from the list?");
                 }
             } else if (stage === 2) {
-                addMessage("Bot", "That’s awesome! Redirecting you now... 🚀");
+                addMessage("bot", "That’s awesome! Redirecting you now... 🚀");
                 setTimeout(() => {
                     window.location.href = sessionStorage.getItem("nextPage");
                 }, 1500);
