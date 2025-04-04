@@ -1,167 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Dream and Do</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Dream and Do</title>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('redreams.jpg') no-repeat center center/cover;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
 
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-            authDomain: "dreamanddo-b78e6.firebaseapp.com",
-            projectId: "dreamanddo-b78e6",
-            storageBucket: "dreamanddo-b78e6.appspot.com",
-            messagingSenderId: "52287172119",
-            appId: "1:52287172119:web:6227752526f43d2ccb7652",
-            measurementId: "G-15WBNVGWTR"
-        };
+    form {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    .input-container {
+      position: relative;
+      width: 100%;
+    }
 
-        // Login function
-        async function handleLogin(event) {
-            event.preventDefault(); // Prevent page reload
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
 
-            let username = document.getElementById("username").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let resultElement = document.getElementById("result");
+    .eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+    }
 
-            if (!username || !password) {
-                resultElement.textContent = "Please fill in both fields.";
-                return;
-            }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: teal;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
 
-            try {
-                const usersRef = collection(db, "users");
-                const q = query(usersRef, where("name", "==", username), where("password", "==", password));
-                const querySnapshot = await getDocs(q);
+    button:hover {
+      background-color: #006d6d;
+    }
 
-                if (!querySnapshot.empty) {
-                    document.querySelector("form").style.display = "none";
-                    document.getElementById("success-message").textContent = "Login Successful!";
-                    document.getElementById("success-message").style.display = "block";
+    #result, #success-message {
+      color: white;
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-                    setTimeout(() => {
-                        console.log("Redirecting to mode.html...");
-                        window.location.href = "mode.html";
-                    }, 2000);
-                } else {
-                    resultElement.textContent = "Invalid Username or Password";
-                }
-            } catch (error) {
-                console.error("Error fetching user:", error);
-                resultElement.textContent = "Error logging in. Please try again.";
-            }
-        }
-
-        window.handleLogin = handleLogin;
-    </script>
-
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: url('redreams.jpg') no-repeat center center/cover; /* Set lodr.jpeg as background */
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        form {
-            background: rgba(255, 255, 255, 0.8); /* Slight transparency for the form */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        .input-container {
-            position: relative;
-            width: 100%;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .eye-icon {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: teal;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #006d6d;
-        }
-        #result, #success-message {
-            color: white;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        #success-message {
-            display: none;
-        }
-    </style>
-
-    <script>
-        function togglePassword() {
-            const passwordField = document.getElementById("password");
-            const eyeIcon = document.getElementById("eye-icon");
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                eyeIcon.textContent = "😃"; 
-            } else {
-                passwordField.type = "password";
-                eyeIcon.textContent = "🤫";
-            }
-        }
-    </script>
-
+    #success-message {
+      display: none;
+    }
+  </style>
 </head>
 <body>
+  <h2 style="color: white;">LOGIN</h2>
 
-    <h2 style="color: white;">LOGIN</h2>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Enter your name" required />
 
-    <form onsubmit="handleLogin(event)">
-        <input type="text" id="username" placeholder="Enter your username" required>
+    <div class="input-container">
+      <input type="password" id="password" placeholder="Enter password" required />
+      <span class="eye-icon" id="eye-icon" onclick="togglePassword()">🤫</span>
+    </div>
 
-        <div class="input-container">
-            <input type="password" id="password" placeholder="Enter password" required>
-            <span class="eye-icon" id="eye-icon" onclick="togglePassword()">🤫</span>
-        </div>
+    <button type="submit">Login</button>
+  </form>
 
-        <button type="submit">Login</button>
-    </form>
+  <p id="result"></p>
+  <p id="success-message"></p>
 
-    <p id="result"></p>
-    <p id="success-message"></p>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
+      authDomain: "dreamanddo-b78e6.firebaseapp.com",
+      projectId: "dreamanddo-b78e6",
+      storageBucket: "dreamanddo-b78e6.appspot.com",
+      messagingSenderId: "52287172119",
+      appId: "1:52287172119:web:6227752526f43d2ccb7652",
+      measurementId: "G-15WBNVGWTR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("loginForm");
+    const resultEl = document.getElementById("result");
+    const successEl = document.getElementById("success-message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        resultEl.textContent = "Please enter both name and password.";
+        return;
+      }
+
+      try {
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("name", "==", username), where("password", "==", password));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          const userId = userDoc.id;
+
+          // Save userId in localStorage
+          localStorage.setItem("loggedInUserId", userId);
+
+          form.style.display = "none";
+          successEl.textContent = "✅ Login successful!";
+          successEl.style.display = "block";
+
+          setTimeout(() => {
+            window.location.href = "mode.html";
+          }, 2000);
+        } else {
+          resultEl.textContent = "❌ Invalid name or password.";
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        resultEl.textContent = "❌ Something went wrong. Try again.";
+      }
+    });
+  </script>
+
+  <script>
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      const eyeIcon = document.getElementById("eye-icon");
+
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.textContent = "😃";
+      } else {
+        passwordField.type = "password";
+        eyeIcon.textContent = "🤫";
+      }
+    }
+  </script>
 </body>
 </html>
