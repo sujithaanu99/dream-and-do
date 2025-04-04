@@ -10,6 +10,7 @@
     import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
     import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
+    // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
       authDomain: "dreamanddo-b78e6.firebaseapp.com",
@@ -20,21 +21,25 @@
       measurementId: "G-15WBNVGWTR"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth();
 
     let currentUser = null;
 
+    // Check if user is logged in
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         currentUser = user;
         await loadUserData();
       } else {
-        window.location.href = "login.html";
+        document.getElementById("result").textContent = "⚠️ You are not logged in. Please log in to update your profile.";
+        document.getElementById("result").style.color = "red";
       }
     });
 
+    // Load User Data
     async function loadUserData() {
       if (!currentUser) return;
       const userRef = doc(db, "users", currentUser.uid);
@@ -45,6 +50,7 @@
       }
     }
 
+    // Update Profile
     window.updateProfile = async function (event) {
       event.preventDefault();
       if (!currentUser) return;
