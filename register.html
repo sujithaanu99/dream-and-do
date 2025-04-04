@@ -10,7 +10,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
             authDomain: "dreamanddo-b78e6.firebaseapp.com",
@@ -21,20 +20,22 @@
             measurementId: "G-15WBNVGWTR"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Function to register a user
         window.registerUser = async function (event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
 
             const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const age = document.getElementById("age").value;
+            const dob = document.getElementById("dob").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirm-password").value;
             const gender = document.querySelector('input[name="gender"]:checked');
 
-            if (!name || !password || !confirmPassword || !gender) {
+            if (!name || !email || !address || !age || !dob || !password || !confirmPassword || !gender) {
                 alert("Please fill in all fields.");
                 return;
             }
@@ -46,15 +47,20 @@
 
             try {
                 await addDoc(collection(db, "users"), {
-                    name: name,
-                    password: password,
+                    name,
+                    email,
+                    address,
+                    age: Number(age),
+                    dob,
+                    password,
                     gender: gender.value
                 });
+
                 document.getElementById("success-message").textContent = "Registration Successful!";
                 document.getElementById("success-message").style.display = 'block';
 
                 setTimeout(() => {
-                    window.location.href = "login.html"; // Redirect to login page
+                    window.location.href = "login.html";
                 }, 2000);
             } catch (error) {
                 console.error("Error registering user:", error);
@@ -62,7 +68,6 @@
             }
         };
 
-        // Toggle Password Visibility
         window.togglePassword = function (id, eyeId) {
             const passwordField = document.getElementById(id);
             const eyeIcon = document.getElementById(eyeId);
@@ -125,7 +130,7 @@
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            background-color: #8B4513; /* Brown color */
+            background-color: #8B4513;
             color: white;
             border: none;
             border-radius: 5px;
@@ -133,7 +138,7 @@
             font-size: 16px;
         }
         button:hover {
-            background-color: #5A2E0E; /* Darker brown on hover */
+            background-color: #5A2E0E;
         }
         #result, #success-message {
             color: white;
@@ -162,6 +167,10 @@
 
     <form onsubmit="registerUser(event)">
         <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="text" id="address" placeholder="Enter your address" required>
+        <input type="number" id="age" placeholder="Enter your age" min="1" required>
+        <input type="date" id="dob" placeholder="Enter your DOB" required>
 
         <div class="input-container">
             <input type="password" id="password" placeholder="Enter password" required>
