@@ -51,10 +51,22 @@
     </style>
 
     <script>
-        // Redirect to offline.html if the page is refreshed
+        // Check if the user is returning (via back or refresh)
+        const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+
+        if (navigationType === "reload" || navigationType === "back_forward") {
+            window.location.href = "offline.html";
+        }
+
+        // Fallback for older browsers
         if (performance.navigation.type === 1) {
             window.location.href = "offline.html";
         }
+
+        // Optional: Clear session to prevent this on first visit
+        window.onload = () => {
+            sessionStorage.setItem("visited", "true");
+        };
     </script>
 </head>
 <body>
