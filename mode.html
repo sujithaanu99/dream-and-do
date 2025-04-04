@@ -13,12 +13,10 @@
             0% {
                 transform: translateY(100px) scale(0.8);
                 opacity: 0;
-                box-shadow: 0 0 0px rgba(255, 255, 255, 0);
             }
             100% {
                 transform: translateY(0) scale(1);
                 opacity: 1;
-                box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
             }
         }
 
@@ -34,15 +32,11 @@
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
-            background-size: cover;
-            background-position: center;
-            transition: background 1.5s ease-in-out;
         }
 
         .header {
             font-size: 40px;
             font-weight: bold;
-            margin-top: 20px;
             position: absolute;
             top: 10px;
         }
@@ -73,14 +67,18 @@
             background: #f0f0f0;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            color: black;
-            font-size: 14px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .chatbot-container.minimized {
             opacity: 0;
-            transform: translateY(100px);
-            animation: chatbotEntrance 1s ease-out forwards;
+            transform: scale(0);
+            height: 0;
         }
 
         .chatbot-header {
@@ -89,6 +87,7 @@
             padding: 10px;
             font-weight: bold;
             text-align: center;
+            cursor: pointer;
         }
 
         .chatbot-messages {
@@ -114,7 +113,6 @@
 
         .message.you {
             flex-direction: row;
-            align-items: flex-start;
             margin-left: 32px;
         }
 
@@ -123,7 +121,6 @@
             padding: 10px 14px;
             border-radius: 15px;
             max-width: 80%;
-            position: relative;
         }
 
         .bot-avatar {
@@ -152,6 +149,22 @@
             padding: 10px 15px;
             cursor: pointer;
         }
+
+        /* Chatbot Toggle Button */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: teal;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
@@ -161,9 +174,12 @@
         <button class="mode-button" onclick="window.location.href='offline.html'">🏫 Offline</button>
     </div>
 
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-toggle" id="chatToggle" onclick="toggleChatbot()">💬</button>
+
     <!-- Chatbot -->
-    <div class="chatbot-container">
-        <div class="chatbot-header">🤖 Chat with Me!</div>
+    <div class="chatbot-container minimized" id="chatbot">
+        <div class="chatbot-header" onclick="toggleChatbot()">🤖 Chat with Me!</div>
         <div class="chatbot-messages" id="chatMessages">
             <div class="message bot">
                 <img src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png" class="bot-avatar" alt="bot">
@@ -177,44 +193,42 @@
     </div>
 
     <script>
+        const chatbot = document.getElementById("chatbot");
+        const chatToggle = document.getElementById("chatToggle");
         const messages = document.getElementById("chatMessages");
         const input = document.getElementById("chatInput");
 
-        let modeSelected = "";
         let stage = 0;
+        let modeSelected = "";
 
-        const onlineOptions = {
-            "coding": "coding.html",
-            "marketing": "marketing.html",
-            "graphic design": "graphicdesign.html",
-            "creative writing": "creativewriting.html",
-            "online fitness": "fitness.html"
-        };
+        // Minimize chatbot on load
+        document.addEventListener("DOMContentLoaded", function() {
+            chatbot.classList.add("minimized");
+        });
 
-        const offlineOptions = {
-            "acting": "acting.html",
-            "music": "music.html",
-            "diy": "diy.html",
-            "woodworking": "woodworking.html",
-            "painting": "painting.html",
-            "yoga": "yoga.html",
-            "wellness": "wellness.html"
-        };
+        function toggleChatbot() {
+            chatbot.classList.toggle("minimized");
+            if (chatbot.classList.contains("minimized")) {
+                chatToggle.innerHTML = "💬";
+            } else {
+                chatToggle.innerHTML = "✖️";
+            }
+        }
 
-        // First message typing animation
+        // Typing effect for bot's first message
         const firstMessage = "Hey there! Do you prefer online or offline learning? 😊";
         let i = 0;
         const typingFirst = document.getElementById("typingFirst");
-        const typeIntro = () => {
+
+        function typeIntro() {
             if (i < firstMessage.length) {
                 typingFirst.innerHTML = firstMessage.substring(0, i + 1);
                 i++;
                 setTimeout(typeIntro, 30);
             }
-        };
+        }
         typeIntro();
 
-        // Function to type out any bot message
         function addMessage(sender, text) {
             const message = document.createElement("div");
             message.classList.add("message", sender);
@@ -227,20 +241,18 @@
                 messages.appendChild(message);
                 messages.scrollTop = messages.scrollHeight;
 
-                const typingEl = message.querySelector(".message-text");
                 let j = 0;
-                const type = () => {
+                const typingEl = message.querySelector(".message-text");
+                function type() {
                     if (j < text.length) {
                         typingEl.innerHTML = text.substring(0, j + 1);
                         j++;
                         setTimeout(type, 25);
                     }
-                };
-                setTimeout(type, 300); // Delay typing slightly
+                }
+                setTimeout(type, 300);
             } else {
-                message.innerHTML = `
-                    <div class="message-text">${text}</div>
-                `;
+                message.innerHTML = `<div class="message-text">${text}</div>`;
                 messages.appendChild(message);
                 messages.scrollTop = messages.scrollHeight;
             }
@@ -256,31 +268,15 @@
             if (stage === 0) {
                 if (userMsg.includes("online")) {
                     modeSelected = "online";
+                    addMessage("bot", "Great! Choose one: Coding, Marketing, Graphic Design...");
                     stage = 1;
-                    addMessage("bot", "Great! Choose one: Coding, Marketing, Graphic Design, Creative Writing, or Online Fitness.");
                 } else if (userMsg.includes("offline")) {
                     modeSelected = "offline";
+                    addMessage("bot", "Awesome! Choose one: Acting, Music, DIY...");
                     stage = 1;
-                    addMessage("bot", "Awesome! Choose one: Acting, Music, DIY, Woodworking, Painting, Yoga, or Wellness.");
                 } else {
-                    addMessage("bot", "Please type 'online' or 'offline' to get started.");
+                    addMessage("bot", "Please type 'online' or 'offline' 😊");
                 }
-            } else if (stage === 1) {
-                const options = modeSelected === "online" ? onlineOptions : offlineOptions;
-                const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
-
-                if (matchedKey) {
-                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
-                    stage = 2;
-                    sessionStorage.setItem("nextPage", options[matchedKey]);
-                } else {
-                    addMessage("bot", "Hmm, I didn’t catch that. Can you choose one from the list?");
-                }
-            } else if (stage === 2) {
-                addMessage("bot", "That’s awesome! Redirecting you now... 🚀");
-                setTimeout(() => {
-                    window.location.href = sessionStorage.getItem("nextPage");
-                }, 1500);
             }
         }
 
