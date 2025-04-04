@@ -3,77 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Digital Marketing Courses in Visakhapatnam</title>
+  <title>Nict Computer Education</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      text-align: center;
-      background: #008080;
+      background-color: #008080;
+      color: white;
       margin: 0;
       padding: 0;
-      color: white;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden; /* Hide scrollbars */
+      overflow: hidden;
     }
 
-    header {
-      color: white;
-      padding: 20px;
-      font-size: 48px;
-      font-weight: bold;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-    }
-
-    .institutes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .institute {
-      padding: 30px;
-      background: white;
-      border-radius: 10px;
-      border: 2px solid #ddd;
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    .back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: white;
+      color: #008080;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
       cursor: pointer;
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-      position: relative;
-      font-size: 22px;
-      color: black;
-      width: 320px;
+      z-index: 1000;
     }
 
-    .institute:hover {
-      transform: scale(1.2);
-      box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+    .back-button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .content {
+      padding-top: 80px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      font-size: 20px;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
 
-  <header>Digital Marketing Courses in Visakhapatnam</header>
+  <!-- Back Button -->
+  <button class="back-button" onclick="history.back()">← Back</button>
 
-  <main>
-    <div class="institutes">
-      <div class="institute" onclick="goToInstitute('nict_computer.html')">💻 Nict Computer Education (4.8⭐, 402 Ratings) - Dwaraka Nagar</div>
-      <div class="institute" onclick="goToInstitute('full_stack_world.html')">🌍 Full Stack World (4.8⭐, 61 Ratings) - Pithapuram Colony</div>
-      <div class="institute" onclick="goToInstitute('millennium_software.html')">🖥️ Millennium Software Solutions Pvt Ltd (4.3⭐, 788 Ratings) - Dwaraka Nagar</div>
-      <div class="institute" onclick="goToInstitute('teks_academy.html')">📚 Teks Academy (4.8⭐, 86 Ratings) - Dwaraka Nagar</div>
-      <div class="institute" onclick="goToInstitute('aim_software.html')">🚀 Aim Software Technologies (4.8⭐, 34 Ratings) - Dwaraka Nagar</div>
-    </div>
-  </main>
-
-  <script>
-    function goToInstitute(page) {
-      // Navigate to new page without iframe
-      window.top.location.href = page;
-    }
-  </script>
+  <div class="content">
+    <h1>Nict Computer Education</h1>
+    <p>One of the top-rated institutes for digital marketing in Visakhapatnam with 4.8⭐ (402 Ratings).</p>
+    <p>Located in Dwaraka Nagar. Offers hands-on training with real-time projects.</p>
+  </div>
 
 </body>
 </html>
