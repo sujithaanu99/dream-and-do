@@ -16,18 +16,10 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        /* Header with padding to avoid overlap */
-        header {
-            color: white;
-            padding: 20px;
-            font-size: 36px;
-            font-weight: bold;
             position: relative;
         }
 
-        /* Back button positioned at the top-left corner */
+        /* Back button at the absolute top-left corner */
         .back-button {
             position: absolute;
             top: 15px;
@@ -44,6 +36,16 @@
 
         .back-button:hover {
             background-color: #f0f0f0;
+        }
+
+        /* Header stays centered */
+        header {
+            color: white;
+            padding: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px; /* Extra space so the button does not overlap */
         }
 
         .institutes {
@@ -76,7 +78,8 @@
     </style>
 </head>
 <body>
-    <!-- Back Button in Top-Left -->
+
+    <!-- Back Button in the Top-Left Corner -->
     <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
 
     <header>
@@ -96,5 +99,6 @@
             <div class="institute">🖱️ New Thoughts IT Solutions (4.5⭐, 540 Ratings)</div>
         </div>
     </main>
+
 </body>
 </html>
