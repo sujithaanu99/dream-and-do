@@ -1,103 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming Training Institutes in Visakhapatnam</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            background: #008080;
-            margin: 0;
-            padding: 0;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programming Training Institutes in Visakhapatnam</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: #008080;
+      margin: 0;
+      padding: 0;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
 
-        /* Back button at the absolute top-left corner */
-        .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: white;
-            color: #008080;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
+    /* Back button in the top-left corner */
+    .back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: white;
+      color: #008080;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      z-index: 999;
+    }
 
-        .back-button:hover {
-            background-color: #f0f0f0;
-        }
+    .back-button:hover {
+      background-color: #f0f0f0;
+    }
 
-        header {
-            color: white;
-            padding: 20px;
-            font-size: 36px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 60px; /* Extra space so the button doesn't overlap */
-        }
+    header {
+      padding: 20px;
+      font-size: 36px;
+      font-weight: bold;
+      margin-top: 60px;
+    }
 
-        .institutes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
+    .institutes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
 
-        .institute {
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-            position: relative;
-            font-size: 20px;
-            color: black;
-            width: 300px;
-            text-align: center;
-        }
+    .institute {
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      font-size: 20px;
+      color: black;
+      width: 300px;
+      text-align: center;
+    }
 
-        .institute:hover {
-            transform: scale(1.1);
-            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
-        }
-    </style>
+    .institute:hover {
+      transform: scale(1.1);
+      box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Back Button in the Top-Left Corner -->
-    <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
+  <!-- Back button in the top-left corner -->
+  <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
 
-    <header>
-        Programming Training Institutes in Visakhapatnam
-    </header>
+  <header>Programming Training Institutes in Visakhapatnam</header>
 
-    <main>
-        <div class="institutes">
-            <div class="institute">💻 Coding Pro It Solutions (4.6⭐, 225 Ratings)</div>
-            <div class="institute">📚 NICT Computer Education (4.8⭐, 402 Ratings)</div>
-            <div class="institute">📊 Novel Infotech (4.7⭐, 588 Ratings)</div>
-            <div class="institute">🎨 Data Pro Computers (4.4⭐, 179 Ratings)</div>
-            <div class="institute">🏢 Mahesh I Technologies (4.9⭐, 99 Ratings)</div>
-            <div class="institute">🚀 Rapid Solutions (4.6⭐, 62 Ratings)</div>
-            <div class="institute">🖥️ New Thoughts IT Solutions (4.6⭐, 64 Ratings)</div>
-            <div class="institute">⚙️ Robocoupler Pvt Ltd (4.8⭐, 75 Ratings)</div>
-            <div class="institute">🖱️ New Thoughts IT Solutions (4.5⭐, 540 Ratings)</div>
-        </div>
-    </main>
+  <main>
+    <div class="institutes">
+      <div class="institute">💻 Coding Pro It Solutions (4.6⭐, 225 Ratings)</div>
+      <div class="institute">📚 NICT Computer Education (4.8⭐, 402 Ratings)</div>
+      <div class="institute">📊 Novel Infotech (4.7⭐, 588 Ratings)</div>
+      <div class="institute">🎨 Data Pro Computers (4.4⭐, 179 Ratings)</div>
+      <div class="institute">🏢 Mahesh I Technologies (4.9⭐, 99 Ratings)</div>
+      <div class="institute">🚀 Rapid Solutions (4.6⭐, 62 Ratings)</div>
+      <div class="institute">🖥️ New Thoughts IT Solutions (4.6⭐, 64 Ratings)</div>
+      <div class="institute">⚙️ Robocoupler Pvt Ltd (4.8⭐, 75 Ratings)</div>
+      <div class="institute">🖱️ New Thoughts IT Solutions (4.5⭐, 540 Ratings)</div>
+    </div>
+  </main>
 
 </body>
 </html>
