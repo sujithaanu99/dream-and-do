@@ -3,61 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nict Computer Education</title>
+  <title>Digital Marketing Courses in Visakhapatnam</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #008080;
-      color: white;
+      background: #008080;
       margin: 0;
       padding: 0;
+      color: white;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
     }
 
-    .back-button {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background-color: white;
-      color: #008080;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .back-button:hover {
-      background-color: #f0f0f0;
-    }
-
-    .content {
-      padding-top: 80px;
+    header {
+      color: white;
+      padding: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       text-align: center;
     }
 
-    h1 {
-      font-size: 36px;
+    .institutes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin: 20px;
+      overflow-y: auto;
+      padding-bottom: 30px;
     }
 
-    p {
-      font-size: 20px;
-      padding: 20px;
+    .institute {
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      font-size: 22px;
+      color: black;
+      width: 300px;
+      text-align: center;
+    }
+
+    .institute:hover {
+      transform: scale(1.1);
+      box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      display: none;
     }
   </style>
 </head>
 <body>
+  <header>Digital Marketing Courses in Visakhapatnam</header>
 
-  <!-- Back Button -->
-  <button class="back-button" onclick="history.back()">← Back</button>
+  <main>
+    <div class="institutes" id="institutes-container">
+      <div class="institute" onclick="loadInstitute('nict_computer.html')">💻 NICT Computer Education (4.8⭐, 402 Ratings) - Dwaraka Nagar</div>
+      <div class="institute" onclick="loadInstitute('full_stack_world.html')">🌍 Full Stack World (4.8⭐, 61 Ratings) - Pithapuram Colony</div>
+      <div class="institute" onclick="loadInstitute('millennium_software.html')">🖥️ Millennium Software Solutions Pvt Ltd (4.3⭐, 788 Ratings) - Dwaraka Nagar</div>
+      <div class="institute" onclick="loadInstitute('teks_academy.html')">📚 Teks Academy (4.8⭐, 86 Ratings) - Dwaraka Nagar</div>
+      <div class="institute" onclick="loadInstitute('aim_software.html')">🚀 Aim Software Technologies (4.8⭐, 34 Ratings) - Dwaraka Nagar</div>
+      <div class="institute" onclick="loadInstitute('webwise_academy.html')">🌐 WebWise Academy (4.7⭐, 210 Ratings) - MVP Colony</div>
+      <div class="institute" onclick="loadInstitute('brandboost_institute.html')">📈 BrandBoost Institute (4.9⭐, 95 Ratings) - NAD Junction</div>
+      <div class="institute" onclick="loadInstitute('clicksense_digital.html')">🧠 ClickSense Digital (4.6⭐, 174 Ratings) - Seethammadhara</div>
+      <div class="institute" onclick="loadInstitute('visakha_learners.html')">🏫 Visakha Learners Hub (4.5⭐, 138 Ratings) - Gajuwaka</div>
+      <div class="institute" onclick="loadInstitute('infi_marketing_school.html')">💼 Infi Marketing School (4.9⭐, 59 Ratings) - Maddilapalem</div>
+    </div>
 
-  <div class="content">
-    <h1>Nict Computer Education</h1>
-    <p>One of the top-rated institutes for digital marketing in Visakhapatnam with 4.8⭐ (402 Ratings).</p>
-    <p>Located in Dwaraka Nagar. Offers hands-on training with real-time projects.</p>
-  </div>
+    <iframe id="institute-frame"></iframe>
+  </main>
 
+  <script>
+    function loadInstitute(institutePage) {
+      document.getElementById('institutes-container').style.display = 'none';
+      let frame = document.getElementById('institute-frame');
+      frame.src = institutePage;
+      frame.style.display = 'block';
+    }
+  </script>
 </body>
 </html>
