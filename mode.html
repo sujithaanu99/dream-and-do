@@ -3,12 +3,6 @@
 <head>
     <title>Mode Selection</title>
     <style>
-        @keyframes bgAnimation {
-            0% { background-color: teal; }
-            50% { background-color: #008B8B; }
-            100% { background-color: teal; }
-        }
-
         @keyframes chatbotEntrance {
             0% {
                 transform: translateY(100px) scale(0.8);
@@ -29,13 +23,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: teal;
-            animation: bgAnimation 5s infinite alternate;
+            background: url('modedream.jpg') no-repeat center center fixed;
+            background-size: cover;
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
-            background-size: cover;
-            background-position: center;
             transition: background 1.5s ease-in-out;
         }
 
@@ -262,7 +254,7 @@
                 };
                 setTimeout(type, 300);
             } else {
-                message.innerHTML = <div class="message-text">${text}</div>;
+                message.innerHTML = `<div class="message-text">${text}</div>`;
                 messages.appendChild(message);
                 messages.scrollTop = messages.scrollHeight;
             }
@@ -292,7 +284,7 @@
                 const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
 
                 if (matchedKey) {
-                    addMessage("bot", Cool choice! Just one quick question — why are you interested in ${matchedKey}?);
+                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
                     stage = 2;
                     sessionStorage.setItem("nextPage", options[matchedKey]);
                 } else {
