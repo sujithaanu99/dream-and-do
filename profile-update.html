@@ -14,7 +14,8 @@
     }
 
     body {
-      background-color: #f8f9fa;
+      background: url('profileupdate.jpg') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,10 +26,10 @@
     .container {
       width: 100%;
       max-width: 500px;
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       text-align: center;
     }
 
@@ -149,7 +150,6 @@
     const dobInput = document.getElementById("dob");
     const passwordInput = document.getElementById("password");
 
-    // ✅ Get user ID from localStorage
     const userId = localStorage.getItem("loggedInUserId");
 
     if (!userId) {
