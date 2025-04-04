@@ -18,19 +18,20 @@
             flex-direction: column;
         }
 
+        /* Header with padding to avoid overlap */
         header {
             color: white;
             padding: 20px;
             font-size: 36px;
             font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            position: relative;
         }
 
+        /* Back button positioned at the top-left corner */
         .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
             background-color: white;
             color: #008080;
             font-size: 18px;
@@ -75,9 +76,11 @@
     </style>
 </head>
 <body>
+    <!-- Back Button in Top-Left -->
+    <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
+
     <header>
         Programming Training Institutes in Visakhapatnam
-        <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
     </header>
 
     <main>
