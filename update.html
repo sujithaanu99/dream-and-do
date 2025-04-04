@@ -2,25 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Update Profile</title>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-    import {
-      getFirestore,
-      doc,
-      updateDoc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-    import {
-      getAuth,
-      updateEmail,
-      updatePassword,
-      onAuthStateChanged,
-      setPersistence,
-      browserLocalPersistence
-    } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+    import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
@@ -38,36 +26,22 @@
 
     let currentUser = null;
 
-    // Set persistent login
-    setPersistence(auth, browserLocalPersistence)
-      .then(() => {
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            console.log("Logged in as:", user.email);
-            currentUser = user;
-            await loadUserData();
-          } else {
-            console.warn("User not logged in. Redirecting...");
-            window.location.href = "login.html";
-          }
-        });
-      })
-      .catch((error) => {
-        console.error("Persistence error:", error);
-      });
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        await loadUserData();
+      } else {
+        window.location.href = "login.html";
+      }
+    });
 
     async function loadUserData() {
       if (!currentUser) return;
-
       const userRef = doc(db, "users", currentUser.uid);
       const userSnap = await getDoc(userRef);
-
       if (userSnap.exists()) {
-        const data = userSnap.data();
-        document.getElementById("name").value = data.name || "";
+        document.getElementById("name").value = userSnap.data().name || "";
         document.getElementById("email").value = currentUser.email || "";
-      } else {
-        console.warn("No user document found.");
       }
     }
 
@@ -81,22 +55,13 @@
       const result = document.getElementById("result");
 
       try {
-        if (newName) {
-          await updateDoc(doc(db, "users", currentUser.uid), { name: newName });
-        }
+        if (newName) await updateDoc(doc(db, "users", currentUser.uid), { name: newName });
+        if (newEmail && newEmail !== currentUser.email) await updateEmail(currentUser, newEmail);
+        if (newPassword) await updatePassword(currentUser, newPassword);
 
-        if (newEmail && newEmail !== currentUser.email) {
-          await updateEmail(currentUser, newEmail);
-        }
-
-        if (newPassword) {
-          await updatePassword(currentUser, newPassword);
-        }
-
-        result.textContent = "✅ Your profile has been updated successfully!";
+        result.textContent = "✅ Profile updated successfully!";
         result.style.color = "green";
       } catch (error) {
-        console.error("Update error:", error);
         result.textContent = "❌ Error: " + error.message;
         result.style.color = "red";
       }
@@ -104,60 +69,72 @@
   </script>
 
   <style>
-    body {
-      height: 100vh;
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: teal;
-      font-family: Arial, sans-serif;
-      color: white;
+      height: 100vh;
     }
 
     .container {
-      background-color: white;
-      color: black;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
       width: 90%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
     h2 {
       margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      text-align: left;
+      margin-top: 10px;
     }
 
     input {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
+      margin-top: 5px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
+      border-radius: 5px;
+      font-size: 16px;
     }
 
     button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+      padding: 12px;
+      margin-top: 20px;
       background-color: teal;
       color: white;
+      font-size: 18px;
       border: none;
       border-radius: 5px;
-      font-size: 16px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #006d6d;
+      background-color: #007b7b;
     }
 
     #result {
-      margin-top: 10px;
+      margin-top: 15px;
+      font-size: 16px;
       font-weight: bold;
     }
   </style>
@@ -179,150 +156,5 @@
     </form>
     <p id="result"></p>
   </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Update</title>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-        import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-        import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
-            authDomain: "dreamanddo-b78e6.firebaseapp.com",
-            projectId: "dreamanddo-b78e6",
-            storageBucket: "dreamanddo-b78e6.appspot.com",
-            messagingSenderId: "52287172119",
-            appId: "1:52287172119:web:6227752526f43d2ccb7652",
-            measurementId: "G-15WBNVGWTR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth();
-
-        let currentUser = null;
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUser = user;
-                await loadUserData();
-            } else {
-                console.error("No user logged in.");
-                window.location.href = "login.html";
-            }
-        });
-
-        async function loadUserData() {
-            if (!currentUser) return;
-            const userRef = doc(db, "users", currentUser.uid);
-            const userSnap = await getDoc(userRef);
-
-            if (userSnap.exists()) {
-                document.getElementById("name").value = userSnap.data().name || "";
-                document.getElementById("email").value = currentUser.email || "";
-            }
-        }
-
-        async function updateProfile(event) {
-            event.preventDefault();
-            if (!currentUser) return;
-
-            const newName = document.getElementById("name").value.trim();
-            const newEmail = document.getElementById("email").value.trim();
-            const newPassword = document.getElementById("password").value.trim();
-            const result = document.getElementById("result");
-
-            try {
-                if (newName) {
-                    await updateDoc(doc(db, "users", currentUser.uid), { name: newName });
-                }
-                if (newEmail && newEmail !== currentUser.email) {
-                    await updateEmail(currentUser, newEmail);
-                }
-                if (newPassword) {
-                    await updatePassword(currentUser, newPassword);
-                }
-
-                result.textContent = "Profile updated successfully!";
-                result.style.color = "green";
-            } catch (error) {
-                result.textContent = "Error: " + error.message;
-                result.style.color = "red";
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: teal;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: white;
-            color: black;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: teal;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #006d6d;
-        }
-        #result {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Profile Update</h2>
-        <form onsubmit="updateProfile(event)">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="Enter new name">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter new email">
-            <label for="password">New Password:</label>
-            <input type="password" id="password" placeholder="Enter new password">
-            <button type="submit">Update Profile</button>
-        </form>
-        <p id="result"></p>
-    </div>
 </body>
 </html>
