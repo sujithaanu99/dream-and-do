@@ -15,6 +15,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      overflow: hidden; /* Hides scrollbars */
     }
 
     /* Back Button Fixed in Top Left */
@@ -75,8 +76,8 @@
 </head>
 <body>
 
-  <!-- 🠔 Back Button -->
-  <button class="back-button" onclick="window.location.href='offline.html'">← Back</button>
+  <!-- Back Button (Navigates to online.html without creating extra frames) -->
+  <button class="back-button" onclick="window.top.location.href='online.html'">← Back</button>
 
   <header>
     Programming Training Institutes in Visakhapatnam
