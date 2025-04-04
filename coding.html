@@ -17,12 +17,34 @@
             display: flex;
             flex-direction: column;
         }
+
         header {
             color: white;
             padding: 20px;
             font-size: 36px;
             font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
+
+        .back-button {
+            background-color: white;
+            color: #008080;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
+
         .institutes {
             display: flex;
             flex-wrap: wrap;
@@ -30,6 +52,7 @@
             justify-content: center;
             margin-top: 30px;
         }
+
         .institute {
             padding: 20px;
             background: white;
@@ -44,33 +67,19 @@
             width: 300px;
             text-align: center;
         }
+
         .institute:hover {
             transform: scale(1.1);
             box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
         }
     </style>
-
-    <script>
-        // Check if the user is returning (via back or refresh)
-        const navigationType = performance.getEntriesByType("navigation")[0]?.type;
-
-        if (navigationType === "reload" || navigationType === "back_forward") {
-            window.location.href = "offline.html";
-        }
-
-        // Fallback for older browsers
-        if (performance.navigation.type === 1) {
-            window.location.href = "offline.html";
-        }
-
-        // Optional: Clear session to prevent this on first visit
-        window.onload = () => {
-            sessionStorage.setItem("visited", "true");
-        };
-    </script>
 </head>
 <body>
-    <header>Programming Training Institutes in Visakhapatnam</header>
+    <header>
+        Programming Training Institutes in Visakhapatnam
+        <button class="back-button" onclick="window.location.href='offline.html'">← Back</button>
+    </header>
+
     <main>
         <div class="institutes">
             <div class="institute">💻 Coding Pro It Solutions (4.6⭐, 225 Ratings)</div>
