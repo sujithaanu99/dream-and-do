@@ -175,15 +175,16 @@
         let stage = 0;
         let modeSelected = "";
 
-        // Minimize chatbot on load
         document.addEventListener("DOMContentLoaded", function() {
             chatbot.style.display = "none"; 
+            loadChatHistory();
         });
 
         function toggleChatbot() {
             if (chatbot.style.display === "none") {
                 chatbot.style.display = "flex";
                 chatToggle.innerHTML = "✖️";
+                loadChatHistory(); 
                 if (messages.innerHTML.trim() === "") {
                     addMessage("bot", "Hey there! Do you prefer online or offline learning? 😊");
                 }
@@ -212,6 +213,8 @@
                         typingEl.innerHTML = text.substring(0, j + 1);
                         j++;
                         setTimeout(type, 25);
+                    } else {
+                        saveChatHistory();
                     }
                 }
                 setTimeout(type, 300);
@@ -219,6 +222,7 @@
                 message.innerHTML = `<div class="message-text">${text}</div>`;
                 messages.appendChild(message);
                 messages.scrollTop = messages.scrollHeight;
+                saveChatHistory();
             }
         }
 
@@ -242,6 +246,15 @@
                     addMessage("bot", "Please type 'online' or 'offline' 😊");
                 }
             }
+        }
+
+        function saveChatHistory() {
+            localStorage.setItem("chatHistory", messages.innerHTML);
+        }
+
+        function loadChatHistory() {
+            const history = localStorage.getItem("chatHistory");
+            if (history) messages.innerHTML = history;
         }
 
         input.addEventListener("keypress", function(e) {
