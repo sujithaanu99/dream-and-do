@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Update Profile</title>
 
   <style>
@@ -126,7 +125,6 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
     import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-    import { getAuth, updateEmail, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAc_yLugBHmLNo0J7hXUovTz4ZwMNmZ7Ps",
@@ -140,9 +138,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth();
-
-    let currentUser = null;
 
     const form = document.getElementById("profileForm");
     const result = document.getElementById("result");
@@ -154,15 +149,20 @@
     const dobInput = document.getElementById("dob");
     const passwordInput = document.getElementById("password");
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        currentUser = user;
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
+    // ✅ Get user ID from localStorage
+    const userId = localStorage.getItem("loggedInUserId");
+
+    if (!userId) {
+      result.textContent = "⚠️ You are not logged in.";
+      result.style.color = "red";
+    } else {
+      const docRef = doc(db, "users", userId);
+
+      getDoc(docRef).then((docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
           nameInput.value = data.name || "";
-          emailInput.value = user.email || "";
+          emailInput.value = data.email || "";
           addressInput.value = data.address || "";
           ageInput.value = data.age || "";
           dobInput.value = data.dob || "";
@@ -172,15 +172,15 @@
             if (genderRadio) genderRadio.checked = true;
           }
         }
-      } else {
-        result.textContent = "⚠️ You are not logged in.";
+      }).catch((err) => {
+        result.textContent = "Error loading profile: " + err.message;
         result.style.color = "red";
-      }
-    });
+      });
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!currentUser) return;
+      if (!userId) return;
 
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
@@ -188,21 +188,14 @@
       const age = ageInput.value.trim();
       const dob = dobInput.value;
       const gender = document.querySelector('input[name="gender"]:checked')?.value;
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
       try {
-        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDocRef = doc(db, "users", userId);
+
         await updateDoc(userDocRef, {
-          name, address, age: Number(age), dob, gender
+          name, email, address, age: Number(age), dob, gender, ...(password && { password })
         });
-
-        if (email && email !== currentUser.email) {
-          await updateEmail(currentUser, email);
-        }
-
-        if (password) {
-          await updatePassword(currentUser, password);
-        }
 
         result.textContent = "✅ Profile updated successfully!";
         result.style.color = "green";
