@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -263,7 +262,7 @@
                 };
                 setTimeout(type, 300);
             } else {
-                message.innerHTML = `<div class="message-text">${text}</div>`;
+                message.innerHTML = <div class="message-text">${text}</div>;
                 messages.appendChild(message);
                 messages.scrollTop = messages.scrollHeight;
             }
@@ -293,7 +292,7 @@
                 const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
 
                 if (matchedKey) {
-                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
+                    addMessage("bot", Cool choice! Just one quick question — why are you interested in ${matchedKey}?);
                     stage = 2;
                     sessionStorage.setItem("nextPage", options[matchedKey]);
                 } else {
