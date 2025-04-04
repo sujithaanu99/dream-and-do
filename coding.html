@@ -49,6 +49,13 @@
             box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
         }
     </style>
+
+    <script>
+        // Redirect to offline.html if the page is refreshed
+        if (performance.navigation.type === 1) {
+            window.location.href = "offline.html";
+        }
+    </script>
 </head>
 <body>
     <header>Programming Training Institutes in Visakhapatnam</header>
