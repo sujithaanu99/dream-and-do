@@ -4,11 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Programming Training Institutes in Visakhapatnam</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      text-align: center;
       background: #008080;
       margin: 0;
       padding: 0;
@@ -19,7 +17,7 @@
       position: relative;
     }
 
-    /* Back button in the top-left corner */
+    /* Back Button Fixed in Top Left */
     .back-button {
       position: absolute;
       top: 15px;
@@ -32,7 +30,7 @@
       padding: 10px 20px;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
-      z-index: 999;
+      z-index: 1000;
     }
 
     .back-button:hover {
@@ -40,10 +38,10 @@
     }
 
     header {
-      padding: 20px;
+      padding: 60px 20px 20px;
       font-size: 36px;
       font-weight: bold;
-      margin-top: 60px;
+      text-align: center;
     }
 
     .institutes {
@@ -52,6 +50,7 @@
       gap: 20px;
       justify-content: center;
       margin-top: 30px;
+      padding: 0 20px;
     }
 
     .institute {
@@ -76,10 +75,12 @@
 </head>
 <body>
 
-  <!-- Back button in the top-left corner -->
-  <button class="back-button" onclick="window.location.href='online.html'">← Back</button>
+  <!-- 🠔 Back Button -->
+  <button class="back-button" onclick="window.location.href='offline.html'">← Back</button>
 
-  <header>Programming Training Institutes in Visakhapatnam</header>
+  <header>
+    Programming Training Institutes in Visakhapatnam
+  </header>
 
   <main>
     <div class="institutes">
