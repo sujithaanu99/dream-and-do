@@ -1,9 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mode Selection</title>
+    <style>
+        @keyframes bgAnimation {
+            0% { background-color: teal; }
+            50% { background-color: #008B8B; }
+            100% { background-color: teal; }
+        }
+
+        @keyframes chatbotEntrance {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+                box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: teal;
+            animation: bgAnimation 5s infinite alternate;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            transition: background 1.5s ease-in-out;
+        }
+
+        .header {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            position: absolute;
+            top: 10px;
+        }
+
+        .mode-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mode-button {
+            padding: 15px 25px;
+            background-color: white;
+            color: teal;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: black;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(100px);
+            animation: chatbotEntrance 1s ease-out forwards;
+        }
+
+        .chatbot-header {
+            background: teal;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 90%;
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.you {
+            flex-direction: row;
+            align-items: flex-start;
+            margin-left: 32px;
+        }
+
+        .message-text {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 15px;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .chatbot-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chatbot-input button {
+            background: teal;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
     <div class="header">Mode Selection</div>
-
-    <!-- Profile Button -->
-    <button class="profile-button" onclick="window.location.href='update-profile.html'">👤 Profile</button>
-
     <div class="mode-buttons">
         <button class="mode-button" onclick="window.location.href='online.html'">🌐 Online</button>
         <button class="mode-button" onclick="window.location.href='offline.html'">🏫 Offline</button>
@@ -24,23 +177,117 @@
         </div>
     </div>
 
-    <style>
-        .profile-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: white;
-            color: teal;
-            border: 2px solid teal;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 10px;
-            cursor: pointer;
+    <script>
+        const messages = document.getElementById("chatMessages");
+        const input = document.getElementById("chatInput");
+
+        let modeSelected = "";
+        let stage = 0;
+
+        const onlineOptions = {
+            "coding": "coding.html",
+            "marketing": "marketing.html",
+            "graphic design": "graphicdesign.html",
+            "creative writing": "creativewriting.html",
+            "online fitness": "fitness.html"
+        };
+
+        const offlineOptions = {
+            "acting": "acting.html",
+            "music": "music.html",
+            "diy": "diy.html",
+            "woodworking": "woodworking.html",
+            "painting": "painting.html",
+            "yoga": "yoga.html",
+            "wellness": "wellness.html"
+        };
+
+        // First message typing animation
+        const firstMessage = "Hey there! Do you prefer online or offline learning? 😊";
+        let i = 0;
+        const typingFirst = document.getElementById("typingFirst");
+        const typeIntro = () => {
+            if (i < firstMessage.length) {
+                typingFirst.innerHTML = firstMessage.substring(0, i + 1);
+                i++;
+                setTimeout(typeIntro, 30);
+            }
+        };
+        typeIntro();
+
+        // Function to type out any bot message
+        function addMessage(sender, text) {
+            const message = document.createElement("div");
+            message.classList.add("message", sender);
+
+            if (sender === "bot") {
+                message.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png" class="bot-avatar" alt="bot">
+                    <div class="message-text" id="typing-${Date.now()}">...</div>
+                `;
+                messages.appendChild(message);
+                messages.scrollTop = messages.scrollHeight;
+
+                const typingEl = message.querySelector(".message-text");
+                let j = 0;
+                const type = () => {
+                    if (j < text.length) {
+                        typingEl.innerHTML = text.substring(0, j + 1);
+                        j++;
+                        setTimeout(type, 25);
+                    }
+                };
+                setTimeout(type, 300); // Delay typing slightly
+            } else {
+                message.innerHTML = `
+                    <div class="message-text">${text}</div>
+                `;
+                messages.appendChild(message);
+                messages.scrollTop = messages.scrollHeight;
+            }
         }
 
-        .profile-button:hover {
-            background-color: teal;
-            color: white;
+        function sendMessage() {
+            const userMsg = input.value.trim().toLowerCase();
+            if (userMsg === "") return;
+
+            addMessage("you", userMsg);
+            input.value = "";
+
+            if (stage === 0) {
+                if (userMsg.includes("online")) {
+                    modeSelected = "online";
+                    stage = 1;
+                    addMessage("bot", "Great! Choose one: Coding, Marketing, Graphic Design, Creative Writing, or Online Fitness.");
+                } else if (userMsg.includes("offline")) {
+                    modeSelected = "offline";
+                    stage = 1;
+                    addMessage("bot", "Awesome! Choose one: Acting, Music, DIY, Woodworking, Painting, Yoga, or Wellness.");
+                } else {
+                    addMessage("bot", "Please type 'online' or 'offline' to get started.");
+                }
+            } else if (stage === 1) {
+                const options = modeSelected === "online" ? onlineOptions : offlineOptions;
+                const matchedKey = Object.keys(options).find(key => userMsg.includes(key));
+
+                if (matchedKey) {
+                    addMessage("bot", `Cool choice! Just one quick question — why are you interested in ${matchedKey}?`);
+                    stage = 2;
+                    sessionStorage.setItem("nextPage", options[matchedKey]);
+                } else {
+                    addMessage("bot", "Hmm, I didn’t catch that. Can you choose one from the list?");
+                }
+            } else if (stage === 2) {
+                addMessage("bot", "That’s awesome! Redirecting you now... 🚀");
+                setTimeout(() => {
+                    window.location.href = sessionStorage.getItem("nextPage");
+                }, 1500);
+            }
         }
-    </style>
+
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
 </body>
+</html>
